@@ -12,8 +12,6 @@
             --premium-blue: #1e3a8a;
             --brand-gray: #595757;
             --border-color: #cccccc;
-            
-            /* 🔥 新增現代扁平化 UI 顏色 🔥 */
             --flat-green: #27ae60;
             --flat-blue: #2980b9;
             --flat-dark: #34495e;
@@ -30,11 +28,10 @@
 
         .app-container { width: 960px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative; }
         
-        /* 🔥 全新：現代精緻化橫向操作列 🔥 */
         .btn-group { 
             display: flex; 
-            flex-direction: row; /* 🔥 改為橫向 🔥 */
-            justify-content: space-between; /* 平均分配空間 */
+            flex-direction: row; 
+            justify-content: space-between; 
             gap: 15px; 
             margin-bottom: 40px; 
             background-color: #fcfcfc;
@@ -44,39 +41,42 @@
         }
         .btn-group button { 
             border: none; 
-            height: 70px; /* 🔥 尺寸大幅縮小 🔥 */
-            border-radius: 6px; /* 🔥 圓角變小，更精緻 🔥 */
+            height: 70px; 
+            border-radius: 6px; 
             cursor: pointer; 
-            font-size: 24px; /* 🔥 文字縮小，適中清晰 🔥 */
+            font-size: 24px; 
             font-weight: bold; 
-            flex: 1; /* 按鈕平均分配寬度 */
+            flex: 1; 
             transition: all 0.2s ease-in-out; 
             color: var(--flat-text); 
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: none; /* 🔥 移除陰影，更扁平 🔥 */
         }
         .btn-group button:active { transform: translateY(1px); opacity: 0.9; }
         
-        /* 🔥 扁平化顏色設置 🔥 */
         .btn-calc { background-color: var(--flat-green); }
-        .btn-save { background-color: var(--flat-blue); } /* 分享改為雲端藍 */
-        .btn-pc { background-color: var(--flat-dark); }    /* 電腦下載改為專業黑灰 */
+        .btn-save { background-color: var(--flat-blue); } 
+        .btn-pc { background-color: var(--flat-dark); }    
 
         .report-branding { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--yung-red); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         .brand-logo-img { height: 80px; }
         .report-main-title { color: var(--yung-green); font-size: 36px; font-weight: bold; margin: 0; letter-spacing: 2px; }
 
-        /* 設定區巨大化 */
         .control-panel { background: #fdfdfd; padding: 30px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 30px; }
         .control-panel h2 { text-align: center; color: var(--brand-gray); font-size: 32px; border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-top: 0; margin-bottom: 30px; font-weight: 900; }
         
         .input-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 30px; }
         .input-group { display: flex; flex-direction: column; }
         .input-group label { font-weight: 900; margin-bottom: 12px; font-size: 24px; color: #444; }
-        .field-note { font-weight: normal; font-size: 18px; color: #888; }
         
+        /* 仲介費切換選擇器樣式 */
+        .agency-mode-select {
+            font-size: 18px; padding: 4px 8px; margin-left: 10px; 
+            height: auto; width: auto; vertical-align: middle;
+            border: 1px solid #ccc; border-radius: 4px;
+        }
+
         input, select { 
             padding: 16px 20px; 
             border: 2px solid var(--border-color); 
@@ -89,19 +89,13 @@
             outline: none; 
         }
 
-        /* 報表區 */
-        .report-area { position: relative; margin-top: 10px; border-top: 8px solid #fdb913; padding-top: 30px; background-color: #ffffff; }
-        .watermark-overlay {
-            position: absolute; top: 120px; left: 0; width: 100%; height: calc(100% - 120px);
-            pointer-events: none; z-index: 1; opacity: 0.2;
-            background-image: url('logo浮水印.png');
-            background-repeat: no-repeat; background-position: center; background-size: 450px auto;
-        }
+        .input-with-unit { position: relative; display: flex; align-items: center; }
+        .input-unit-label { position: absolute; right: 20px; font-size: 24px; font-weight: bold; color: #888; pointer-events: none; }
 
+        .report-area { position: relative; margin-top: 10px; border-top: 8px solid #fdb913; padding-top: 30px; background-color: #ffffff; }
         table { width: 100%; border-collapse: collapse; position: relative; z-index: 2; table-layout: fixed; }
         th, td { padding: 18px 5px; text-align: center; border-bottom: 1px solid #e2e8f0; }
         th { color: var(--brand-gray); font-size: 18px; font-weight: bold; border-bottom: 2px solid #a0aec0; border-top: 2px solid #a0aec0; background: #fff; }
-        .th-note { display: block; font-size: 13px; color: #94a3b8; margin-top: 8px; font-weight: normal; }
         td { font-size: 24px; font-weight: bold; color: #1e293b; white-space: nowrap; background: rgba(255,255,255,0.7); }
         
         .highlight-row td { background-color: #fff4b3 !important; }
@@ -109,20 +103,16 @@
         .col-net { color: var(--yung-red); font-size: 28px; }
         
         #exportSummary { display: none; background: #f9f9f9; padding: 25px; border-radius: 6px; border-left: 6px solid var(--yung-green); margin-bottom: 25px; font-size: 24px; line-height: 1.8; }
-
         .footer-info { margin-top: 50px; padding-top: 25px; border-top: 1px dashed #ccc; display: flex; justify-content: space-between; font-size: 16px; color: #777; }
-        .footer-left strong { font-size: 20px; color: #1e3a8a; display: block; margin-bottom: 8px; }
-
+        
         .exporting .control-panel, .exporting .btn-group { display: none; }
         .exporting #exportSummary { display: block; }
         .exporting { box-shadow: none; border: none; margin: 0; }
 
-        /* Toast 成功提示也要縮小，才協調 */
         #toastMessage {
             visibility: hidden; min-width: 300px; background-color: var(--flat-green); color: #fff;
             text-align: center; border-radius: 8px; padding: 20px; position: fixed; z-index: 9999;
             left: 50%; transform: translateX(-50%); bottom: 30px; font-size: 24px; font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: none;
         }
         #toastMessage.show { visibility: visible; opacity: 1; }
     </style>
@@ -153,6 +143,7 @@
             <div class="input-group"><label>購買時仲介費 (萬元)</label><input type="number" id="buyAgencyFee" value="0"></div>
             <div class="input-group"><label>購買時代書費等規費 (萬元)</label><input type="number" id="buyOtherFees" value="0"></div>
         </div>
+        
         <div class="input-grid" style="border-top: 2px dashed #ccc; padding-top: 30px; margin-top: 10px;">
             <div class="input-group">
                 <label>房地合一稅率 (%)</label>
@@ -164,9 +155,22 @@
                     <option value="10">10% (自用滿6年優惠)</option>
                 </select>
             </div>
-            <div class="input-group"><label>賣方仲介費 (%)</label><input type="number" id="agencyRate" value="4"></div>
+            <div class="input-group">
+                <label>
+                    賣方仲介費 
+                    <select id="agencyMode" class="agency-mode-select" onchange="updateAgencyUnit()">
+                        <option value="percent">比例 (%)</option>
+                        <option value="fixed">固定 (萬)</option>
+                    </select>
+                </label>
+                <div class="input-with-unit">
+                    <input type="number" id="agencyValue" value="4" style="width: 100%;">
+                    <span id="agencyUnit" class="input-unit-label">%</span>
+                </div>
+            </div>
             <div class="input-group"><label>賣方其他規費 (萬元)</label><input type="number" id="otherSellingFees" value="0"></div>
         </div>
+
         <div class="input-grid" style="border-top: 2px dashed #ccc; padding-top: 30px; margin-top: 10px;">
             <div class="input-group"><label>基準成交價 (萬元)</label><input type="number" id="basePrice" value="1500"></div>
             <div class="input-group">
@@ -185,7 +189,6 @@
     <div id="exportSummary"></div>
 
     <div class="report-area">
-        <div class="watermark-overlay"></div>
         <table>
             <thead>
                 <tr>
@@ -214,6 +217,20 @@
 </div>
 
 <script>
+    function updateAgencyUnit() {
+        const mode = document.getElementById('agencyMode').value;
+        const unitLabel = document.getElementById('agencyUnit');
+        const input = document.getElementById('agencyValue');
+        if (mode === 'percent') {
+            unitLabel.innerText = '%';
+            if (input.value > 10) input.value = 4;
+        } else {
+            unitLabel.innerText = '萬';
+            if (input.value <= 6) input.value = 15;
+        }
+        generateTable(); // 切換時自動重新計算
+    }
+
     function showSuccessToast(message) {
         const toast = document.getElementById("toastMessage");
         toast.innerText = message;
@@ -226,9 +243,13 @@
         const reno = parseFloat(document.getElementById('renovationCost').value) || 0;
         const buyAgencyFee = parseFloat(document.getElementById('buyAgencyFee').value) || 0;
         const buyOtherFees = parseFloat(document.getElementById('buyOtherFees').value) || 0;
+        
         const taxRateVal = document.getElementById('taxRate').value;
         const taxRate = parseFloat(taxRateVal) / 100;
-        const agencyRate = parseFloat(document.getElementById('agencyRate').value) || 0;
+        
+        const agencyMode = document.getElementById('agencyMode').value;
+        const agencyValue = parseFloat(document.getElementById('agencyValue').value) || 0;
+        
         const sOther = parseFloat(document.getElementById('otherSellingFees').value) || 0;
         const base = parseFloat(document.getElementById('basePrice').value) || 0;
         const step = parseFloat(document.getElementById('stepValue').value) || 10;
@@ -237,22 +258,30 @@
         const totalAcq = cost + reno + buyAgencyFee + buyOtherFees;
         document.getElementById('dateDisplay').innerText = new Date().toLocaleDateString();
 
+        const agencyDisplay = (agencyMode === 'percent') ? `${agencyValue}%` : `${agencyValue} 萬`;
+
         document.getElementById('exportSummary').innerHTML = `
             <strong>當前報告設定條件：</strong><br>
             取得成本：買入 ${cost} 萬 | 裝潢 ${reno} 萬 | 買方費 ${buyAgencyFee} 萬 | 規費 ${buyOtherFees} 萬 (總: ${totalAcq.toFixed(1)})<br>
-            稅務設定：稅率 ${taxRateVal}% | 賣方仲介費 ${agencyRate}% | 賣出規費 ${sOther} 萬
+            稅務設定：稅率 ${taxRateVal}% | 賣方仲介費 ${agencyDisplay} | 賣出規費 ${sOther} 萬
         `;
 
         const tbody = document.getElementById('resultBody');
         tbody.innerHTML = '';
+
         for(let i = 0; i >= -rows + 1; i--) {
             let price = base + (i * step);
-            let sellAgency = price * (agencyRate / 100);
+            
+            // 計算賣方仲介費邏輯
+            let sellAgency = (agencyMode === 'percent') ? (price * (agencyValue / 100)) : agencyValue;
+            
             let actualSellExp = sellAgency + sOther;
             let deducExp = Math.max(actualSellExp, Math.min(price * 0.03, 30));
             let taxBase = price - totalAcq - deducExp;
+            
             if (taxRateVal === '10') taxBase = Math.max(0, taxBase - 400); 
             else taxBase = Math.max(0, taxBase);
+            
             let tax = taxBase * taxRate;
             let net = price - totalAcq - actualSellExp - tax;
 
@@ -270,6 +299,7 @@
         }
     }
 
+    // 匯出相關 Function (保持原樣)
     async function directDownloadPC() {
         generateTable();
         const mainApp = document.getElementById('main-app');
