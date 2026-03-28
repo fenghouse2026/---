@@ -195,12 +195,12 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width:15%;">成交價(萬)</th>
-                    <th style="width:17%;">實付費用(萬)<span class="th-note">(仲介費+規費)</span></th>
-                    <th style="width:20%;">抵扣費用(萬)<span class="th-note">(擇優:仲介費或最高30萬)</span></th>
-                    <th style="width:16%;">課稅所得(萬)<span class="th-note">(賣價-總成本-抵扣)</span></th>
-                    <th style="width:16%;">房地合一稅(萬)<span class="th-note">(所得 × 稅率 = 稅金)</span></th>
-                    <th style="width:16%;">淨獲利(萬)<span class="th-note">(賣價-總成本-實付-稅)</span></th>
+                    <th style="width:15%;">成交價</th>
+                    <th style="width:17%;">實付費用<span class="th-note">(仲介費+規費)</span></th>
+                    <th style="width:20%;">抵扣費用<span class="th-note">(擇優:仲介費或最高30萬)</span></th>
+                    <th style="width:16%;">課稅所得<span class="th-note">(賣價-總成本-抵扣)</span></th>
+                    <th style="width:16%;">房地合一稅<span class="th-note">(所得 × 稅率 = 稅金)</span></th>
+                    <th style="width:16%;">淨獲利<span class="th-note">(賣價-總成本-實付-稅)</span></th>
                 </tr>
             </thead>
             <tbody id="resultBody"></tbody>
@@ -338,11 +338,13 @@
                 
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     try {
-                        await navigator.share({ files: [file], title: '成屋獲利對照報告' });
-                        btnSave.innerHTML = originalText;
+                        await navigator.share({
+                            files: [file],
+                            title: '成屋獲利對照報告'
+                        });
                         showSuccessToast("✅ 已成功分享或儲存！");
                     } catch (err) {
-                        btnSave.innerHTML = originalText;
+                        // 使用者取消分享時，不做任何事，只恢復按鈕
                     }
                 } else {
                     const url = URL.createObjectURL(blob);
@@ -353,8 +355,10 @@
                     link.click();
                     document.body.removeChild(link);
                     showSuccessToast("✅ 報表已成功下載！");
-                    btnSave.innerHTML = originalText;
                 }
+                
+                btnSave.innerHTML = originalText;
+
             }, 'image/png');
 
         } catch (error) {
