@@ -25,12 +25,23 @@
         /* 主程式區塊 */
         .app-container { width: 960px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative; }
         
-        .btn-group { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 30px; }
-        .btn-group button { border: none; padding: 15px 10px; border-radius: 8px; cursor: pointer; font-size: 20px; font-weight: bold; flex: 1; transition: 0.3s; color: white; }
-        .btn-group button:active { transform: scale(0.98); }
-        .btn-calc { background: var(--yung-green); box-shadow: 0 4px 10px rgba(0, 140, 74, 0.3); }
-        .btn-save { background: var(--yung-red); box-shadow: 0 4px 10px rgba(216, 42, 41, 0.4); }
-        .btn-pc { background: var(--premium-blue); box-shadow: 0 4px 10px rgba(30, 58, 138, 0.4); }
+        /* 🔥 按鈕區全面巨大化 🔥 */
+        .btn-group { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 40px; }
+        .btn-group button { 
+            border: none; 
+            padding: 25px 15px; /* 高度與寬度大幅增加 */
+            border-radius: 12px; /* 圓角變大，更像 APP 按鈕 */
+            cursor: pointer; 
+            font-size: 26px; /* 字體超級大 */
+            font-weight: 900; /* 字體加到最粗 */
+            flex: 1; 
+            transition: 0.3s; 
+            color: white; 
+        }
+        .btn-group button:active { transform: scale(0.96); }
+        .btn-calc { background: var(--yung-green); box-shadow: 0 6px 15px rgba(0, 140, 74, 0.35); }
+        .btn-save { background: var(--yung-red); box-shadow: 0 6px 15px rgba(216, 42, 41, 0.45); }
+        .btn-pc { background: var(--premium-blue); box-shadow: 0 6px 15px rgba(30, 58, 138, 0.45); }
 
         .report-branding { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--yung-red); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         .brand-logo-img { height: 80px; }
@@ -61,7 +72,7 @@
         }
         input:focus, select:focus { border-color: var(--yung-green); box-shadow: 0 0 8px rgba(0,140,74,0.3); }
 
-        /* 報表區維持原樣 */
+        /* 報表區 */
         .report-area { position: relative; margin-top: 10px; border-top: 8px solid #fdb913; padding-top: 30px; background-color: #ffffff; }
         .watermark-overlay {
             position: absolute; top: 120px; left: 0; width: 100%; height: calc(100% - 120px);
@@ -138,10 +149,6 @@
             <div class="input-group">
                 <label>購買時代書費等規費 (萬元)</label>
                 <input type="number" id="buyOtherFees" value="0" step="0.1">
-            </div>
-            <div class="input-group">
-                <label>土地漲價總數額 (萬元) <span class="field-note">(扣減稅基用)</span></label>
-                <input type="number" id="landIncrement" value="0" step="1">
             </div>
         </div>
 
@@ -233,7 +240,6 @@
         const reno = parseFloat(document.getElementById('renovationCost').value) || 0;
         const buyAgencyFee = parseFloat(document.getElementById('buyAgencyFee').value) || 0;
         const buyOtherFees = parseFloat(document.getElementById('buyOtherFees').value) || 0;
-        const landIncrement = parseFloat(document.getElementById('landIncrement').value) || 0;
         
         const taxRateVal = document.getElementById('taxRate').value;
         const taxRate = parseFloat(taxRateVal) / 100;
@@ -250,7 +256,7 @@
         document.getElementById('exportSummary').innerHTML = `
             <strong>當前報告設定條件：</strong><br>
             取得成本：買入 ${cost} 萬 | 裝潢 ${reno} 萬 | 買方仲介費 ${buyAgencyFee} 萬 | 買入規費 ${buyOtherFees} 萬 (總: ${totalAcq.toFixed(1)})<br>
-            稅務設定：土增稅 ${landIncrement} 萬 | 稅率 ${taxRateVal}% | 賣方仲介費 ${agencyRate}% | 賣出規費 ${sOther} 萬
+            稅務設定：稅率 ${taxRateVal}% | 賣方仲介費 ${agencyRate}% | 賣出規費 ${sOther} 萬
         `;
 
         const tbody = document.getElementById('resultBody');
@@ -261,7 +267,8 @@
             let actualSellExp = sellAgency + sOther;
             let deducExp = Math.max(actualSellExp, Math.min(price * 0.03, 30));
             
-            let taxBase = price - totalAcq - deducExp - landIncrement;
+            // 稅基計算：已移除土地漲價總數額
+            let taxBase = price - totalAcq - deducExp;
             if (taxRateVal === '10') {
                 taxBase = Math.max(0, taxBase - 400); 
             } else {
@@ -344,7 +351,7 @@
                         });
                         showSuccessToast("✅ 已成功分享或儲存！");
                     } catch (err) {
-                        // 使用者取消分享時，不做任何事，只恢復按鈕
+                        // 使用者取消分享時，不做任何事
                     }
                 } else {
                     const url = URL.createObjectURL(blob);
