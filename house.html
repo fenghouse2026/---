@@ -71,17 +71,41 @@
             display: none; width: 1050px; background: #333333; min-height: 100vh; padding-bottom: 50px;
         }
         .overlay-header {
-            background: #1e3a8a; color: white; padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            background: #1e3a8a; color: white; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        .overlay-header span { font-size: 22px; font-weight: bold; }
+        .overlay-header span { font-size: 24px; font-weight: bold; }
         
-        /* 💡 電腦版與返回按鈕樣式 💡 */
-        .header-btns { display: flex; gap: 15px; }
-        .btn-download-pc { background: var(--yung-green); color: white; width: auto; padding: 12px 25px; font-size: 18px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; }
-        .btn-download-pc:hover { background: #00703A; }
-        .btn-back-img { background: white; color: #1e3a8a; width: auto; padding: 12px 25px; font-size: 18px; border-radius: 8px; cursor: pointer; border: none; font-weight: bold; }
+        /* 💡 電腦版與返回按鈕樣式 (巨大化 + 動畫) 💡 */
+        .header-btns { display: flex; gap: 20px; align-items: center; }
+        
+        .btn-download-pc { 
+            background: var(--yung-red); /* 換成最吸睛的紅色 */
+            color: white; 
+            width: auto; 
+            padding: 15px 30px; 
+            font-size: 24px; /* 字體變更大 */
+            border-radius: 50px; 
+            cursor: pointer; 
+            border: 4px solid #ffffff; /* 加上白邊框更立體 */
+            font-weight: 900; 
+            box-shadow: 0 5px 15px rgba(216, 42, 41, 0.6);
+            animation: bouncePC 2s infinite; /* 💡 加入彈跳動畫 💡 */
+        }
+        .btn-download-pc:hover { background: #b02221; transform: scale(1.05); animation: none; }
+        
+        .btn-back-img { 
+            background: white; color: #1e3a8a; width: auto; padding: 15px 30px; 
+            font-size: 22px; border-radius: 50px; cursor: pointer; border: none; font-weight: bold; 
+        }
         .btn-back-img:hover { background: #f1f5f9; }
+
+        /* 電腦按鈕彈跳動畫 */
+        @keyframes bouncePC {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
         
         /* 圖片容器：加上虛線框，像實體報表 */
         .image-wrapper {
@@ -95,19 +119,25 @@
             display: block; width: 100%; height: auto; pointer-events: auto; border-radius: 8px;
         }
 
-        /* 手機版：超明顯的「壓住我儲存」提示框 */
+        /* 🔥 手機版：超級巨大的「壓住我儲存」提示框 🔥 */
         .press-hint {
-            position: absolute; top: 35%; left: 50%; transform: translate(-50%, -50%);
+            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
             background: rgba(216, 42, 41, 0.95); color: #ffffff;
-            font-size: 40px; font-weight: 900; padding: 25px 60px; border-radius: 60px;
-            border: 5px solid #ffffff; pointer-events: none; z-index: 50;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            font-size: 55px; /* 💡 從 40px 放大到 55px 💡 */
+            font-weight: 900; 
+            padding: 35px 80px; /* 💡 框框變得更大 💡 */
+            border-radius: 80px;
+            border: 8px solid #ffffff; /* 💡 白邊加粗 💡 */
+            pointer-events: none; z-index: 50;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            white-space: nowrap;
             animation: pulseHint 1.5s infinite;
         }
 
+        /* 更強烈的呼吸燈效果 */
         @keyframes pulseHint {
-            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(216, 42, 41, 0.7); }
-            70% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 0 0 25px rgba(216, 42, 41, 0); }
+            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(216, 42, 41, 0.8); }
+            70% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 0 35px rgba(216, 42, 41, 0); }
             100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(216, 42, 41, 0); }
         }
     </style>
@@ -203,7 +233,7 @@
     </div>
     
     <div class="image-wrapper">
-        <div class="press-hint">👇 壓住我儲存 👇</div>
+        <div class="press-hint">👇 長按這裡儲存圖片 👇</div>
         <img id="generatedImg" alt="成屋獲利報告">
     </div>
 </div>
@@ -277,7 +307,7 @@
         }, 300);
     }
 
-    // 💡 電腦版一鍵下載功能 (強制觸發版) 💡
+    // 電腦版一鍵下載功能 (強制觸發版)
     function downloadImage() {
         const img = document.getElementById('generatedImg');
         if (!img.src) return;
@@ -286,11 +316,8 @@
         link.download = `成屋獲利報告_${new Date().getTime()}.png`;
         link.href = img.src;
         
-        // 必須將 link 加入 DOM，電腦瀏覽器才會允許點擊下載
         document.body.appendChild(link);
         link.click();
-        
-        // 下載完畢後移除連結
         document.body.removeChild(link);
     }
 
