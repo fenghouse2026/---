@@ -76,21 +76,21 @@
         }
         .overlay-header span { font-size: 24px; font-weight: bold; }
         
-        /* 💡 電腦版與返回按鈕樣式 (巨大化 + 動畫) 💡 */
+        /* 電腦版與返回按鈕樣式 (彈跳動畫) */
         .header-btns { display: flex; gap: 20px; align-items: center; }
         
         .btn-download-pc { 
-            background: var(--yung-red); /* 換成最吸睛的紅色 */
+            background: var(--yung-red); 
             color: white; 
             width: auto; 
             padding: 15px 30px; 
-            font-size: 24px; /* 字體變更大 */
+            font-size: 24px; 
             border-radius: 50px; 
             cursor: pointer; 
-            border: 4px solid #ffffff; /* 加上白邊框更立體 */
+            border: 4px solid #ffffff; 
             font-weight: 900; 
             box-shadow: 0 5px 15px rgba(216, 42, 41, 0.6);
-            animation: bouncePC 2s infinite; /* 💡 加入彈跳動畫 💡 */
+            animation: bouncePC 2s infinite; 
         }
         .btn-download-pc:hover { background: #b02221; transform: scale(1.05); animation: none; }
         
@@ -100,14 +100,13 @@
         }
         .btn-back-img:hover { background: #f1f5f9; }
 
-        /* 電腦按鈕彈跳動畫 */
         @keyframes bouncePC {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-10px); }
             60% { transform: translateY(-5px); }
         }
         
-        /* 圖片容器：加上虛線框，像實體報表 */
+        /* 圖片容器：加上虛線框 */
         .image-wrapper {
             position: relative; width: 960px; margin: 40px auto 0;
             border: 6px dashed #ffffff; padding: 10px; background: #ffffff;
@@ -119,25 +118,26 @@
             display: block; width: 100%; height: auto; pointer-events: auto; border-radius: 8px;
         }
 
-        /* 🔥 手機版：超級巨大的「壓住我儲存」提示框 🔥 */
+        /* 🔥 手機版：超級巨無霸的「大力壓住我儲存」提示框 🔥 */
         .press-hint {
             position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
             background: rgba(216, 42, 41, 0.95); color: #ffffff;
-            font-size: 55px; /* 💡 從 40px 放大到 55px 💡 */
+            font-size: 75px; /* 💡 放大到 75px 💡 */
             font-weight: 900; 
-            padding: 35px 80px; /* 💡 框框變得更大 💡 */
-            border-radius: 80px;
-            border: 8px solid #ffffff; /* 💡 白邊加粗 💡 */
+            padding: 50px 100px; /* 💡 內距超巨大 💡 */
+            border-radius: 100px;
+            border: 12px solid #ffffff; /* 💡 超粗白邊框 💡 */
             pointer-events: none; z-index: 50;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
             white-space: nowrap;
-            animation: pulseHint 1.5s infinite;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            animation: pulseHint 1.5s infinite; /* 呼吸燈動畫 */
         }
 
-        /* 更強烈的呼吸燈效果 */
+        /* 更強烈、範圍更大的呼吸燈效果 */
         @keyframes pulseHint {
-            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(216, 42, 41, 0.8); }
-            70% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 0 35px rgba(216, 42, 41, 0); }
+            0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(216, 42, 41, 0.9); }
+            70% { transform: translate(-50%, -50%) scale(1.08); box-shadow: 0 0 0 45px rgba(216, 42, 41, 0); }
             100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(216, 42, 41, 0); }
         }
     </style>
@@ -233,7 +233,7 @@
     </div>
     
     <div class="image-wrapper">
-        <div class="press-hint">👇 長按這裡儲存圖片 👇</div>
+        <div class="press-hint">👇 (大力的壓住我儲存) 👇</div>
         <img id="generatedImg" alt="成屋獲利報告">
     </div>
 </div>
@@ -307,7 +307,7 @@
         }, 300);
     }
 
-    // 電腦版一鍵下載功能 (強制觸發版)
+    // 💡 電腦版一鍵下載功能 (強制觸發版) 💡
     function downloadImage() {
         const img = document.getElementById('generatedImg');
         if (!img.src) return;
