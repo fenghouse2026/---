@@ -62,34 +62,44 @@
             overflow: hidden; 
         }
 
-        /* --- 6 個固定位置浮水印 --- */
+        /* 浮水印圖層 */
         .watermark-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 10;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 999; 
+            pointer-events: none; 
+            overflow: hidden;
         }
-        .wm {
+
+        /* 中央 LOGO 浮水印 */
+        .wm-logo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px; 
+            max-width: 80%;
+            opacity: 0.08; 
+        }
+
+        /* 6 個文字浮水印 */
+        .wm-text {
             position: absolute;
             text-align: center;
             transform: rotate(-25deg);
-            color: rgba(0, 0, 0, 0.05);
-            font-size: 16px;
+            color: rgba(0, 0, 0, 0.08); 
+            font-size: 18px;
             font-weight: bold;
             line-height: 1.5;
             white-space: nowrap;
-            width: 250px;
         }
-        /* 定位 6 個點 */
+
         .wm-1 { top: 12%; left: 5%; }
         .wm-2 { top: 12%; right: 5%; }
-        .wm-3 { top: 48%; left: 5%; }
-        .wm-4 { top: 48%; right: 5%; }
-        .wm-5 { bottom: 15%; left: 5%; }
-        .wm-6 { bottom: 15%; right: 5%; }
+        .wm-3 { top: 48%; left: -5%; } 
+        .wm-4 { top: 48%; right: -5%; }
+        .wm-5 { bottom: 12%; left: 5%; }
+        .wm-6 { bottom: 12%; right: 5%; }
 
         .report-branding {
             display: flex;
@@ -98,7 +108,7 @@
             margin-bottom: 25px; 
             padding-bottom: 15px;
             border-bottom: 2px solid var(--yung-red); 
-            position: relative; z-index: 20; 
+            position: relative;
         }
 
         .brand-logo-container { flex: 0 0 auto; }
@@ -124,7 +134,7 @@
             border-radius: 4px;
             border: 1px solid #eee;
             margin-bottom: 20px; 
-            position: relative; z-index: 20;
+            position: relative;
         }
 
         .print-summary {
@@ -169,12 +179,11 @@
             color: #888;
         }
         
-        /* --- 修復截圖時文字被切掉的關鍵設定 --- */
         input, select {
             padding: 8px 10px;
-            height: 42px; /* 增加明確的固定高度 */
-            line-height: normal; /* 讓文字自然垂直置中 */
-            font-family: inherit; /* 強制繼承字體，避免預設字體高度計算誤差 */
+            height: 42px;
+            line-height: normal;
+            font-family: inherit;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 15px;
@@ -187,38 +196,16 @@
             border-color: var(--yung-green);
         }
         
-        .flex-row {
-            display: flex;
-            gap: 5px;
-            width: 100%;
-        }
+        .flex-row { display: flex; gap: 5px; width: 100%; }
         .flex-row > select { flex: 0 0 40%; min-width: 0; }
         .flex-row > input { flex: 1; min-width: 0; }
 
-        .capture-area {
-            margin-top: 10px;
-            position: relative; z-index: 20;
-        }
-        .report-header {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .brand-subtitle {
-            font-size: 15px;
-            color: var(--yung-red);
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .system-hint {
-            font-size: 13px;
-            color: #888;
-            margin-bottom: 10px;
-        }
+        .capture-area { margin-top: 10px; position: relative; }
+        .report-header { text-align: center; margin-bottom: 15px; }
+        .brand-subtitle { font-size: 15px; color: var(--yung-red); font-weight: bold; margin-bottom: 5px; }
+        .system-hint { font-size: 13px; color: #888; margin-bottom: 10px; }
         
-        .table-container {
-            width: 100%;
-            margin-bottom: 10px;
-        }
+        .table-container { width: 100%; margin-bottom: 10px; }
 
         table {
             width: 100%;
@@ -250,9 +237,8 @@
             color: #aaa;
             margin-top: 2px;
         }
-        .highlight-row {
-            background-color: #fff4b3 !important; 
-        }
+        table, th, td { border-left: none; border-right: none; }
+        .highlight-row { background-color: #fff4b3 !important; }
         
         .footer-info {
             margin-top: 30px;
@@ -268,31 +254,18 @@
 
         @media (max-width: 768px) {
             body { padding: 10px; }
-            #full-report-area {
-                padding: 15px;
-                border-top: 6px solid var(--yung-yellow); 
-            }
-            .wm { font-size: 12px; width: 180px; }
-            .report-branding {
-                flex-direction: column;
-                gap: 10px;
-                padding-bottom: 10px;
-                margin-bottom: 10px;
-            }
+            #full-report-area { padding: 15px; border-top: 6px solid var(--yung-yellow); }
+            .wm-logo { width: 300px; } 
+            .wm-text { font-size: 13px; } 
+            .report-branding { flex-direction: column; gap: 10px; padding-bottom: 10px; margin-bottom: 10px; }
             .brand-logo-img { height: 60px; }
             .report-main-title { font-size: 22px; text-align: center; }
             .control-panel { padding: 15px; }
-            
             table { font-size: 11px; width: 100%; } 
             th, td { padding: 4px 1px; } 
             .col-formula { font-size: 9px; margin-top: 2px; transform: scale(0.9); }
             .dynamic-method { font-size: 9px; transform: scale(0.9); }
-            
-            .footer-info {
-                flex-direction: column;
-                text-align: center;
-                gap: 8px;
-            }
+            .footer-info { flex-direction: column; text-align: center; gap: 8px; }
             .footer-info div { text-align: center !important; max-width: 100% !important; }
             .btn-group button { width: 100%; }
         }
@@ -301,7 +274,6 @@
 <body>
 
 <div class="app-container">
-    
     <div class="btn-group">
         <button onclick="generateTable()">重新產生試算表</button>
         <button class="btn-red" onclick="saveAsImage()">一鍵儲存完整報告圖片</button>
@@ -309,14 +281,16 @@
 
     <div id="full-report-area">
         <div class="watermark-overlay">
-            <div class="wm wm-1">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
-            <div class="wm wm-2">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
-            <div class="wm wm-3">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
-            <div class="wm wm-4">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
-            <div class="wm wm-5">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
-            <div class="wm wm-6">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
+            <img src="logo浮水印.png" class="wm-logo" alt="">
+            
+            <div class="wm-text wm-1">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
+            <div class="wm-text wm-2">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
+            <div class="wm-text wm-3">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
+            <div class="wm-text wm-4">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
+            <div class="wm-text wm-5">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
+            <div class="wm-text wm-6">版權所有<br>承峰不動產仲介有限公司<br>(非本店員工禁止操作使用)</div>
         </div>
-        
+
         <div class="report-branding">
             <div class="brand-logo-container">
                 <img src="logo.png" alt="品牌 LOGO" class="brand-logo-img" onerror="this.style.display='none'">
@@ -372,7 +346,6 @@
                         <option value="10">10% (自用滿6年，扣400萬免稅額)</option>
                     </select>
                 </div>
-                
                 <div class="input-group">
                     <label>賣方仲介費</label>
                     <div class="flex-row">
@@ -383,7 +356,6 @@
                         <input type="number" id="agencyRate" value="4" step="0.1">
                     </div>
                 </div>
-                
                 <div class="input-group">
                     <label>賣方其他規費 (萬元) <span class="field-note">(備註代書費等)</span></label>
                     <input type="number" id="otherSellingFees" value="0" step="0.1">
@@ -417,32 +389,16 @@
                 <div class="brand-subtitle">(成屋專用) 稅務試算表</div>
                 <div class="system-hint">系統已自動為您擇優認列賣出費用</div>
             </div>
-            
             <div class="table-container">
                 <table id="resultTable">
                     <thead>
                         <tr>
                             <th>成交價(萬)</th>
-                            <th>
-                                實付費用(萬)
-                                <span class="col-formula">(仲介費+規費)</span>
-                            </th>
-                            <th>
-                                抵扣費用(萬)
-                                <span class="col-formula">(擇優:仲介費或免稅額最高30萬)</span>
-                            </th>
-                            <th>
-                                課稅所得(萬)
-                                <span class="col-formula">(賣價-總成本-抵扣)</span>
-                            </th>
-                            <th>
-                                房地合一稅(萬)
-                                <span class="col-formula">(所得 × 稅率 = 稅金)</span>
-                            </th>
-                            <th>
-                                淨獲利(萬)
-                                <span class="col-formula">(賣價-總成本-實付-稅)</span>
-                            </th>
+                            <th>實付費用(萬)<span class="col-formula">(仲介費+規費)</span></th>
+                            <th>抵扣費用(萬)<span class="col-formula">(擇優:仲介費或免稅額最高30萬)</span></th>
+                            <th>課稅所得(萬)<span class="col-formula">(賣價-總成本-抵扣)</span></th>
+                            <th>房地合一稅(萬)<span class="col-formula">(所得 × 稅率 = 稅金)</span></th>
+                            <th>淨獲利(萬)<span class="col-formula">(賣價-總成本-實付-稅)</span></th>
                         </tr>
                     </thead>
                     <tbody id="resultBody">
@@ -452,7 +408,8 @@
             
             <div class="footer-info">
                 <div>
-                    <strong>承峰不動產仲介有限公司 (永義房屋斗六成功莊敬加盟店)</strong><br>
+                    <strong>永義房屋斗六成功莊敬加盟店</strong>
+                    <span style="font-size: 11px; color: #777; margin-left: 5px;">(承峰不動產仲介有限公司)</span><br>
                     雲林縣斗六市成功二街126號
                 </div>
                 <div style="text-align: right; max-width: 65%; ">
@@ -551,10 +508,7 @@
             tr.innerHTML = `
                 <td style="font-weight: bold; color: var(--table-blue);">${currentPrice}</td>
                 <td style="color: var(--brand-gray);">${formatNum(actualSellingExpense)}</td>
-                <td style="color: #888;">
-                    ${formatNum(deductibleExpense)}
-                    <span class="dynamic-method">${deducMethod}</span>
-                </td>
+                <td style="color: #888;">${formatNum(deductibleExpense)}<span class="dynamic-method">${deducMethod}</span></td>
                 <td style="color: var(--brand-gray);">${formatNum(taxBase)}</td>
                 <td style="color: var(--brand-gray);">${formatNum(taxAmount)}</td>
                 <td style="font-weight: bold; color: ${getColor(netProfit)};">${formatNum(netProfit)}</td>
