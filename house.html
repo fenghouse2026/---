@@ -22,11 +22,10 @@
             overscroll-behavior: none; 
         }
 
-        /* 主程式區塊 */
         .app-container { width: 960px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative; }
         
         .btn-group { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 30px; }
-        .btn-group button { border: none; padding: 15px 10px; border-radius: 8px; cursor: pointer; font-size: 19px; font-weight: bold; flex: 1; transition: 0.3s; color: white; }
+        .btn-group button { border: none; padding: 15px 10px; border-radius: 8px; cursor: pointer; font-size: 20px; font-weight: bold; flex: 1; transition: 0.3s; color: white; }
         .btn-group button:active { transform: scale(0.98); }
         .btn-calc { background: var(--yung-green); box-shadow: 0 4px 10px rgba(0, 140, 74, 0.3); }
         .btn-save { background: var(--yung-red); box-shadow: 0 4px 10px rgba(216, 42, 41, 0.4); }
@@ -36,18 +35,32 @@
         .brand-logo-img { height: 80px; }
         .report-main-title { color: var(--yung-green); font-size: 36px; font-weight: bold; margin: 0; letter-spacing: 2px; }
 
-        /* 🔥 完全沿用您的控制面板設計 🔥 */
-        .control-panel { background: #fdfdfd; padding: 25px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 30px; }
-        .control-panel h2 { text-align: center; color: var(--brand-gray); font-size: 22px; border-bottom: 1px dashed #ccc; padding-bottom: 15px; margin-top: 0; margin-bottom: 25px; }
+        /* 🔥 設定區全面巨大化 🔥 */
+        .control-panel { background: #fdfdfd; padding: 30px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 30px; }
+        .control-panel h2 { text-align: center; color: var(--brand-gray); font-size: 32px; /* 標題放大 */ border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-top: 0; margin-bottom: 30px; font-weight: 900; }
         
-        /* 配合 1050px 鎖定，設定為兩大欄，確保手機上格子夠大 */
-        .input-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px; }
+        .input-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; /* 間距拉大 */ margin-bottom: 30px; }
         .input-group { display: flex; flex-direction: column; }
-        .input-group label { font-weight: bold; margin-bottom: 8px; font-size: 16px; color: #555; }
-        .field-note { font-weight: normal; font-size: 13px; color: #888; }
-        input, select { padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 20px; box-sizing: border-box; background-color: #fff; outline: none; }
-        input:focus, select:focus { border-color: var(--yung-green); box-shadow: 0 0 5px rgba(0,140,74,0.2); }
+        
+        /* 標籤文字與備註放大 */
+        .input-group label { font-weight: 900; margin-bottom: 12px; font-size: 24px; color: #444; }
+        .field-note { font-weight: normal; font-size: 18px; color: #888; }
+        
+        /* 輸入框與選單巨大化 */
+        input, select { 
+            padding: 16px 20px; /* 格子增高加寬 */
+            border: 2px solid var(--border-color); /* 邊框加粗 */
+            border-radius: 8px; 
+            font-size: 30px; /* 文字飆升到 30px */
+            font-weight: bold;
+            color: #1e3a8a;
+            box-sizing: border-box; 
+            background-color: #fff; 
+            outline: none; 
+        }
+        input:focus, select:focus { border-color: var(--yung-green); box-shadow: 0 0 8px rgba(0,140,74,0.3); }
 
+        /* 報表區維持原樣，確保一目瞭然 */
         .report-area { position: relative; margin-top: 10px; border-top: 8px solid #fdb913; padding-top: 30px;}
         .watermark-overlay {
             position: absolute; top: 120px; left: 0; width: 100%; height: calc(100% - 120px);
@@ -66,7 +79,7 @@
         .col-price { color: #2c5282; font-size: 28px; }
         .col-net { color: var(--yung-red); font-size: 28px; }
         
-        #exportSummary { display: none; background: #f9f9f9; padding: 25px; border-radius: 6px; border-left: 6px solid var(--yung-green); margin-bottom: 25px; font-size: 20px; line-height: 1.8; }
+        #exportSummary { display: none; background: #f9f9f9; padding: 25px; border-radius: 6px; border-left: 6px solid var(--yung-green); margin-bottom: 25px; font-size: 24px; line-height: 1.8; }
 
         .footer-info { margin-top: 50px; padding-top: 25px; border-top: 1px dashed #ccc; display: flex; justify-content: space-between; font-size: 16px; color: #777; }
         .footer-left strong { font-size: 20px; color: #1e3a8a; display: block; margin-bottom: 8px; }
@@ -76,7 +89,7 @@
         .exporting #exportSummary { display: block; }
         .exporting { box-shadow: none; border: none; margin: 0; }
 
-        /* 🔥 手機長按存圖 / 備用方案區塊 🔥 */
+        /* 手機長按存圖 / 備用方案區塊 */
         #imageOverlay { display: none; width: 1050px; background: #333333; min-height: 100vh; padding-bottom: 50px; }
         .overlay-header { background: #1e3a8a; color: white; padding: 25px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         .overlay-header span { font-size: 24px; font-weight: bold; }
@@ -149,7 +162,7 @@
                 <input type="number" id="buyAgencyFee" value="0" step="0.1">
             </div>
             <div class="input-group">
-                <label>購買時代書費契稅等 (萬元)</label>
+                <label>購買時代書費等規費 (萬元)</label>
                 <input type="number" id="buyOtherFees" value="0" step="0.1">
             </div>
             <div class="input-group">
@@ -158,7 +171,7 @@
             </div>
         </div>
 
-        <div class="input-grid" style="border-top: 1px dashed #ccc; padding-top: 25px; margin-top: 5px;">
+        <div class="input-grid" style="border-top: 2px dashed #ccc; padding-top: 30px; margin-top: 10px;">
             <div class="input-group">
                 <label>房地合一稅率 (%)</label>
                 <select id="taxRate">
@@ -179,7 +192,7 @@
             </div>
         </div>
         
-        <div class="input-grid" style="border-top: 1px dashed #ccc; padding-top: 25px; margin-top: 5px;">
+        <div class="input-grid" style="border-top: 2px dashed #ccc; padding-top: 30px; margin-top: 10px;">
             <div class="input-group">
                 <label>基準成交價 (萬元)</label>
                 <input type="number" id="basePrice" value="1500" step="1">
@@ -256,7 +269,6 @@
     }
 
     function generateTable() {
-        // 取值並計算 (已加入土地漲價總數額)
         const cost = parseFloat(document.getElementById('costPrice').value) || 0;
         const reno = parseFloat(document.getElementById('renovationCost').value) || 0;
         const buyAgencyFee = parseFloat(document.getElementById('buyAgencyFee').value) || 0;
@@ -285,15 +297,13 @@
         tbody.innerHTML = '';
         for(let i = 0; i >= -rows + 1; i--) {
             let price = base + (i * step);
-            // 賣方仲介費直接用 % 計算
             let sellAgency = price * (agencyRate / 100);
             let actualSellExp = sellAgency + sOther;
             let deducExp = Math.max(actualSellExp, Math.min(price * 0.03, 30));
             
-            // 稅基計算：扣除總成本、抵扣額、以及土地漲價總數額
             let taxBase = price - totalAcq - deducExp - landIncrement;
             if (taxRateVal === '10') {
-                taxBase = Math.max(0, taxBase - 400); // 扣減 400 萬免稅額
+                taxBase = Math.max(0, taxBase - 400); 
             } else {
                 taxBase = Math.max(0, taxBase);
             }
@@ -315,7 +325,6 @@
         }
     }
 
-    // 電腦版一鍵下載
     async function directDownloadPC() {
         generateTable();
         const mainApp = document.getElementById('main-app');
@@ -340,7 +349,6 @@
             document.body.removeChild(link);
             
             showSuccessToast("✅ 報表已成功下載至電腦！");
-
         } catch (error) {
             console.error(error);
             mainApp.classList.remove('exporting');
@@ -349,7 +357,6 @@
         }
     }
 
-    // 手機分享 / 儲存功能
     async function shareOrDownload() {
         generateTable();
         const mainApp = document.getElementById('main-app');
