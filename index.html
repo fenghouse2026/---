@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>永義房屋 - 巔峰水晶毛玻璃版</title>
+    <title>永義房屋 - 成功莊敬店 (級距優化版)</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -15,7 +15,6 @@
             --navy-blue: #001F5B; 
             --glass-white: rgba(255, 255, 255, 0.75);
             --text-dark: #1d1d1f;
-            --text-gray: #86868b;
         }
 
         body {
@@ -50,6 +49,18 @@
             padding: 35px; border-radius: 28px; border: 1px solid rgba(0,0,0,0.05);
             display: grid; grid-template-columns: 1fr 1fr; gap: 20px 30px; margin-bottom: 30px;
         }
+
+        /* 🍎 三欄連動設定區 */
+        .price-settings {
+            grid-column: span 2;
+            display: grid;
+            grid-template-columns: 1.2fr 0.9fr 0.9fr;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px dashed #d2d2d7;
+            margin-top: 10px;
+        }
+
         .input-group label { display: block; font-weight: 800; margin-bottom: 8px; font-size: 13px; color: var(--yung-green); }
         input, select { 
             width: 100%; padding: 13px; border-radius: 12px; border: 1px solid #d2d2d7;
@@ -57,9 +68,7 @@
         }
 
         #output-container {
-            width: 800px; 
-            background: #ffffff;
-            padding: 55px 60px; box-sizing: border-box;
+            width: 800px; background: #ffffff; padding: 55px 60px; box-sizing: border-box;
             display: flex; flex-direction: column; position: relative;
             box-shadow: 0 40px 100px rgba(0,0,0,0.06); margin-bottom: 50px;
         }
@@ -72,7 +81,6 @@
             background: rgba(255, 255, 255, 0.5); border: 1.5px solid var(--yung-gold);
             padding: 25px 30px; margin-bottom: 25px; border-radius: 20px;
         }
-        .summary-title { font-size: 24px; font-weight: 900; color: var(--yung-green); margin-bottom: 12px; display: block; }
         .summary-line { font-size: 18px; color: #333; font-weight: 600; line-height: 2.2; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 8px; }
         .summary-line b { color: #000; font-size: 20px; margin: 0 4px; font-weight: 900; }
 
@@ -96,7 +104,6 @@
 
         .footer { margin-top: 40px; padding-top: 30px; border-top: 2px solid var(--yung-gold); display: flex; justify-content: space-between; align-items: flex-end; }
         .footer-left strong { font-size: 22px; color: #000; display: block; margin-bottom: 5px; font-weight: 900; }
-        .footer-left span { font-size: 16px; color: var(--text-gray); font-weight: 700; }
         .footer-right { text-align: right; color: var(--text-gray); font-size: 13px; line-height: 1.8; }
 
         .watermark { position: absolute; top: 55%; left: 50%; transform: translate(-50%, -50%); width: 80%; opacity: 0.08; pointer-events: none; z-index: 0; }
@@ -117,11 +124,10 @@
     </div>
 
     <div class="control-panel">
-        <div class="input-group"><label>買入 (萬)</label><input type="number" id="costPrice" value="886" oninput="generateTable()"></div>
-        <div class="input-group"><label>裝潢發票 (萬)</label><input type="number" id="renoCost" value="0" oninput="generateTable()"></div>
-        <div class="input-group"><label>服務費 (萬)</label><input type="number" id="buyAg" value="0" oninput="generateTable()"></div>
-        <div class="input-group"><label>規費 (萬)</label><input type="number" id="buyFe" value="0" oninput="generateTable()"></div>
-        <div class="input-group"><label>基準成交預估 (萬)</label><input type="number" id="basePrice" value="1500" oninput="generateTable()"></div>
+        <div class="input-group"><label>買入房價 (萬)</label><input type="number" id="costPrice" value="886" oninput="generateTable()"></div>
+        <div class="input-group"><label>裝潢需發票 (萬)</label><input type="number" id="renoCost" value="0" oninput="generateTable()"></div>
+        <div class="input-group"><label>買入服務費 (萬)</label><input type="number" id="buyAg" value="0" oninput="generateTable()"></div>
+        <div class="input-group"><label>買入規費 (萬)</label><input type="number" id="buyFe" value="0" oninput="generateTable()"></div>
         <div class="input-group">
             <label>賣出服務費</label>
             <div style="display:flex; gap:10px;">
@@ -138,7 +144,25 @@
                 <option value="10">10%</option>
             </select>
         </div>
-        <div class="input-group"><label>顯示筆數</label><input type="number" id="rowCount" value="6" oninput="generateTable()"></div>
+
+        <div class="price-settings">
+            <div class="input-group">
+                <label>基準成交價 (萬)</label>
+                <input type="number" id="basePrice" value="1500" oninput="generateTable()">
+            </div>
+            <div class="input-group">
+                <label>級距單位</label>
+                <select id="stepValue" onchange="generateTable()">
+                    <option value="1">1萬</option>
+                    <option value="5">5萬</option>
+                    <option value="10" selected>10萬</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>延展筆數</label>
+                <input type="number" id="rowCount" value="8" oninput="generateTable()">
+            </div>
+        </div>
     </div>
 </div>
 
@@ -149,9 +173,8 @@
     </div>
 
     <div class="summary-panel">
-        <span class="summary-title">報告設定條件：</span>
-        <div class="summary-line" id="sumLine1">取得：買入 <b>886</b> | 裝潢發票 <b>0</b> | 服務費 <b>0</b> | 規費 <b>0</b></div>
-        <div class="summary-line" id="sumLine2">稅務：稅率 <b>20%</b> | 賣出服務費 <b>4%</b> | 賣出規費 <b>0</b></div>
+        <div class="summary-line" id="sumLine1">取得：買入房價 <b>886</b> | 裝潢(需發票) <b>0</b> | 買入服務費 <b>0</b> | 買入規費 <b>0</b></div>
+        <div class="summary-line" id="sumLine2">稅務：房地合一稅 <b>20%</b> | 賣出服務費 <b>4%</b> | 賣出規費 <b>0</b></div>
     </div>
 
     <div class="hint-bar">
@@ -193,6 +216,7 @@
         const buyAg = parseFloat(document.getElementById('buyAg').value) || 0;
         const buyFe = parseFloat(document.getElementById('buyFe').value) || 0;
         const base = parseFloat(document.getElementById('basePrice').value) || 0;
+        const step = parseFloat(document.getElementById('stepValue').value) || 10;
         const feeType = document.getElementById('feeType').value;
         const agencyVal = parseFloat(document.getElementById('agencyVal').value) || 0;
         const taxRateSelect = document.getElementById('taxRate');
@@ -201,23 +225,20 @@
         const rows = parseInt(document.getElementById('rowCount').value) || 6;
 
         document.getElementById('dateDisplay').innerText = new Date().toLocaleDateString();
-        
-        document.getElementById('sumLine1').innerHTML = `取得：買入 <b>${cost}</b> | 裝潢發票 <b>${reno}</b> | 服務費 <b>${buyAg}</b> | 規費 <b>${buyFe}</b>`;
+        document.getElementById('sumLine1').innerHTML = `取得：買入房價 <b>${cost}</b> | 裝潢(需發票) <b>${reno}</b> | 買入服務費 <b>${buyAg}</b> | 買入規費 <b>${buyFe}</b>`;
         const feeDisplay = (feeType === 'percent') ? `${agencyVal}%` : `${agencyVal}萬`;
-        document.getElementById('sumLine2').innerHTML = `稅務：稅率 <b>${taxText}</b> | 賣出服務費 <b>${feeDisplay}</b> | 賣出規費 <b>0</b>`;
+        document.getElementById('sumLine2').innerHTML = `稅務：房地合一稅 <b>${taxText}</b> | 賣出服務費 <b>${feeDisplay}</b> | 賣出規費 <b>0</b>`;
 
         const tbody = document.getElementById('resultBody');
         tbody.innerHTML = '';
 
         for(let i=0; i < rows; i++) {
-            let price = base - (i * 10);
+            let price = base - (i * step);
             if (price < 0) break;
-            
             let sellAgency = (feeType === 'percent') ? (price * (agencyVal / 100)) : agencyVal;
             let deduc = Math.max(sellAgency, Math.min(price * 0.03, 30));
             let totalAcq = cost + reno + buyAg + buyFe;
             let rawProfit = price - totalAcq - deduc;
-            
             let tax = (taxVal === 10) ? Math.max(0, rawProfit - 400) * 0.1 : Math.max(0, rawProfit) * (taxVal / 100);
             let net = price - totalAcq - sellAgency - tax;
 
@@ -242,15 +263,10 @@
     async function captureAndProcess() {
         const target = document.getElementById('output-container');
         const canvas = await html2canvas(target, { 
-            scale: 3, 
-            useCORS: true, 
-            backgroundColor: null, 
-            width: 800,
-            height: target.offsetHeight,
+            scale: 3, useCORS: true, backgroundColor: null, width: 800, height: target.offsetHeight,
             onclone: (clonedDoc) => {
                 const el = clonedDoc.getElementById('output-container');
-                el.style.transform = 'none';
-                el.style.margin = '0';
+                el.style.transform = 'none'; el.style.margin = '0';
                 el.style.background = "linear-gradient(160deg, #ffffff 0%, #f9f9fb 100%)";
             }
         });
@@ -261,9 +277,7 @@
         const canvas = await captureAndProcess();
         canvas.toBlob(async (blob) => {
             const file = new File([blob], '獲利試算.png', { type: 'image/png' });
-            if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({ files: [file], title: '獲利試算報告' });
-            }
+            if (navigator.canShare && navigator.canShare({ files: [file] })) await navigator.share({ files: [file], title: '獲利試算' });
         });
     }
 
