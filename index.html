@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TESLA Style 獲利試算 - 永義房屋</title>
+    <title>TESLA 風格獲利試算 - 永義房屋</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --tesla-black: #171a20;
             --tesla-gray: #393c41;
             --tesla-light-gray: #f4f4f4;
-            --tesla-red: #e82127; /* Tesla 經典紅用於淨獲利 */
+            --tesla-red: #e82127;
             --tesla-accent: #3d69e1;
         }
 
         body {
-            font-family: 'Gotham SSm', 'PingFang TC', 'Noto Sans TC', sans-serif;
+            font-family: 'PingFang TC', 'Noto Sans TC', sans-serif;
             background: #ffffff; color: var(--tesla-black);
             padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center;
         }
 
-        /* --- 頂部 Tesla 功能按鈕 --- */
+        /* --- 頂部功能按鈕 --- */
         .ui-controls { width: 100%; max-width: 800px; padding: 25px; box-sizing: border-box; }
         .btn-group { display: flex; gap: 10px; margin-bottom: 25px; }
         .btn-group button { 
             border: none; padding: 14px; border-radius: 4px; cursor: pointer;
-            font-weight: 600; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
-            transition: all 0.2s ease-in-out; font-size: 14px;
+            font-weight: 800; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;
+            transition: all 0.2s ease-in-out; font-size: 15px;
             background: var(--tesla-light-gray); color: var(--tesla-gray);
         }
         .btn-group button:hover { background: var(--tesla-gray); color: white; }
         .btn-calc { background: var(--tesla-black) !important; color: white !important; }
 
-        /* --- A4 輸出主容器 --- */
+        /* --- A4 輸出容器 --- */
         #output-container {
             width: 800px; 
             min-height: 1131px; 
@@ -48,52 +48,52 @@
             display: flex; justify-content: space-between; align-items: center; 
             margin-bottom: 40px;
         }
-        .brand-logo-img { height: 50px; opacity: 0.9; }
-        .report-title { color: var(--tesla-black); font-size: 28px; font-weight: 500; margin: 0; letter-spacing: 2px; }
+        .brand-logo-img { height: 60px; opacity: 0.9; }
+        .report-title { color: var(--tesla-black); font-size: 32px; font-weight: 900; margin: 0; letter-spacing: 2px; }
 
-        /* 💡 Tesla 簡約摘要區 */
+        /* --- 報告條件摘要 (大且紮實) --- */
         .summary-panel {
             border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
             padding: 30px 0;
             margin-bottom: 40px;
         }
-        .summary-title { font-size: 14px; color: #5c5e62; font-weight: 700; text-transform: uppercase; margin-bottom: 20px; display: block; letter-spacing: 1px; }
+        .summary-title { font-size: 18px; color: #5c5e62; font-weight: 900; margin-bottom: 20px; display: block; letter-spacing: 1px; }
         .summary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .summary-line { font-size: 18px; color: #171a20; font-weight: 400; }
-        .summary-line b { font-size: 22px; font-weight: 700; margin: 0 4px; border-bottom: 2px solid var(--tesla-black); }
+        .summary-line { font-size: 20px; color: #171a20; font-weight: 400; line-height: 1.8; }
+        .summary-line b { font-size: 24px; font-weight: 800; margin: 0 4px; border-bottom: 2px solid var(--tesla-black); }
 
         /* 報表內容區 */
         .report-content { flex-grow: 1; position: relative; }
         .watermark { 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
-            width: 80%; opacity: 0.05; pointer-events: none; z-index: 0;
+            width: 80%; opacity: 0.08; pointer-events: none; z-index: 0; 
         }
 
         /* 表格設計：極簡無框感 */
         table { width: 100%; border-collapse: collapse; position: relative; z-index: 1; table-layout: fixed; }
-        th { font-size: 13px; color: #5c5e62; font-weight: 700; padding: 15px 0; text-align: center; text-transform: uppercase; border-bottom: 1px solid #eee; }
-        td { padding: 35px 0; text-align: center; border-bottom: 1px solid #f4f4f4; vertical-align: middle; }
+        th { font-size: 15px; color: #5c5e62; font-weight: 900; padding: 15px 0; text-align: center; border-bottom: 1px solid #eee; }
+        td { padding: 35px 0; text-align: center; border-bottom: 1px solid #f4f4f4; vertical-align: middle; background: transparent !important; }
         
-        .col-price { font-size: 32px; color: var(--tesla-black); font-weight: 300; }
-        .col-net { font-size: 36px; color: var(--tesla-red); font-weight: 700; }
-        .col-common { font-size: 18px; color: #393c41; }
-        .tag-small { display: block; font-size: 10px; color: #5c5e62; margin-top: 6px; letter-spacing: 0.5px; font-weight: 700; }
+        .col-price { font-size: 30px; color: var(--tesla-black); font-weight: 300; }
+        .col-net { font-size: 34px; color: var(--tesla-red); font-weight: 900; }
+        .col-common { font-size: 19px; color: #393c41; font-weight: 600; }
+        .tag-small { display: block; font-size: 11px; color: #5c5e62; margin-top: 6px; letter-spacing: 0.5px; font-weight: 900; }
 
         /* 頁腳 */
         .footer { 
-            margin-top: 60px; padding-top: 20px;
+            margin-top: 60px; padding-top: 20px; border-top: 1px solid #eee;
             display: flex; justify-content: space-between; align-items: flex-end;
-            color: #5c5e62; font-size: 12px;
+            color: #5c5e62; font-size: 13px; line-height: 1.6;
         }
-        .footer strong { font-size: 18px; color: var(--tesla-black); display: block; margin-bottom: 4px; font-weight: 600; }
+        .footer strong { font-size: 20px; color: var(--tesla-black); display: block; margin-bottom: 4px; font-weight: 800; }
 
-        /* 控制面板 UI */
+        /* 輸入控制面板 UI */
         .control-panel { background: #f9f9f9; padding: 25px; border-radius: 8px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .input-group label { display: block; font-weight: 600; margin-bottom: 8px; color: #393c41; font-size: 13px; }
+        .input-group label { display: block; font-weight: 800; margin-bottom: 8px; color: #393c41; font-size: 14px; }
         input, select { 
             width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #d0d1d2; 
-            font-size: 16px; box-sizing: border-box; background: white; color: var(--tesla-black);
+            font-size: 16px; box-sizing: border-box; background: white; color: var(--tesla-black); font-weight: bold;
         }
         input:focus { border-color: var(--tesla-black); outline: none; }
 
@@ -106,29 +106,29 @@
 
 <div class="ui-controls">
     <div class="btn-group">
-        <button class="btn-calc" onclick="generateTable()">RECALCULATE / 重新試算</button>
-        <button class="btn-share" onclick="handleMobileShare()">SHARE / 分享</button>
-        <button class="btn-pc" onclick="handlePCDownload()">DOWNLOAD / 下載</button>
+        <button class="btn-calc" onclick="generateTable()">重新試算</button>
+        <button class="btn-share" onclick="handleMobileShare()">手機儲存 / 分享</button>
+        <button class="btn-pc" onclick="handlePCDownload()">電腦儲存照片</button>
     </div>
 
     <div class="control-panel">
-        <div class="input-group"><label>Purchase Price</label><input type="number" id="costPrice" value="1200" oninput="generateTable()"></div>
-        <div class="input-group"><label>Renovation</label><input type="number" id="renoCost" value="0" oninput="generateTable()"></div>
-        <div class="input-group"><label>Agency Fee (Buy)</label><input type="number" id="buyAg" value="0" oninput="generateTable()"></div>
-        <div class="input-group"><label>Closing Costs</label><input type="number" id="buyFe" value="0" oninput="generateTable()"></div>
-        <div class="input-group"><label>Base Listing Price</label><input type="number" id="basePrice" value="1800" oninput="generateTable()"></div>
+        <div class="input-group"><label>買入價格</label><input type="number" id="costPrice" value="886" oninput="generateTable()"></div>
+        <div class="input-group"><label>裝潢成本</label><input type="number" id="renoCost" value="0" oninput="generateTable()"></div>
+        <div class="input-group"><label>買入仲介費</label><input type="number" id="buyAg" value="0" oninput="generateTable()"></div>
+        <div class="input-group"><label>買入規費</label><input type="number" id="buyFe" value="0" oninput="generateTable()"></div>
+        <div class="input-group"><label>基準成交價</label><input type="number" id="basePrice" value="1500" oninput="generateTable()"></div>
         <div class="input-group">
-            <label>Interval & Rows</label>
+            <label>級距與筆數</label>
             <div style="display:flex; gap:5px;">
-                <select id="stepValue" onchange="generateTable()"><option value="5">5萬</option><option value="10" selected>10萬</option></select>
-                <input type="number" id="rowCount" value="5" oninput="generateTable()">
+                <select id="stepValue" onchange="generateTable()"><option value="5">5 萬</option><option value="10" selected>10 萬</option></select>
+                <input type="number" id="rowCount" value="6" oninput="generateTable()">
             </div>
         </div>
-        <div class="input-group"><label>Agency Fee (Sell %)</label><input type="number" id="agencyVal" value="4" oninput="generateTable()"></div>
+        <div class="input-group"><label>賣方服務費 (%)</label><input type="number" id="agencyVal" value="4" oninput="generateTable()"></div>
         <div class="input-group">
-            <label>Capital Gains Tax</label>
+            <label>房地合一稅率</label>
             <select id="taxRate" onchange="generateTable()">
-                <option value="45">45% (持有2年內)</option><option value="35" selected>35% (持有2-5年)</option><option value="10">10% (自住滿6年)</option>
+                <option value="45">45% (持有 2 年內)</option><option value="35" selected>35% (持有 2-5 年)</option><option value="10">10% (自住滿 6 年)</option>
             </select>
         </div>
     </div>
@@ -137,14 +137,14 @@
 <div id="output-container">
     <div class="report-header">
         <img src="logo.png" class="brand-logo-img" alt="永義房屋">
-        <h1 class="report-title">Efficiency Report</h1>
+        <h1 class="report-title">成屋獲利對照報告</h1>
     </div>
 
     <div class="summary-panel">
-        <span class="summary-title">Configuration / 試算設定</span>
+        <span class="summary-title">試算設定條件：</span>
         <div class="summary-grid">
-            <div class="summary-line">取得成本：買入 <b>886</b> | 裝潢 <b>0</b></div>
-            <div class="summary-line">稅務設定：稅率 <b>35%</b> | 賣仲 <b>4%</b></div>
+            <div class="summary-line" id="sumLine1">取得成本：買入 <b>886</b> | 裝潢 <b>0</b></div>
+            <div class="summary-line" id="sumLine2">稅務設定：稅率 <b>35%</b> | 賣仲 <b>4%</b></div>
         </div>
     </div>
 
@@ -153,11 +153,11 @@
         <table>
             <thead>
                 <tr>
-                    <th>Price / 成交價格</th>
-                    <th>Fees / 實付費用</th>
-                    <th>Deduction / 抵扣</th>
-                    <th>Tax / 稅額</th>
-                    <th>Profit / 淨獲利</th>
+                    <th>成交預估</th>
+                    <th>實付費用</th>
+                    <th>抵扣費用</th>
+                    <th>房地稅額</th>
+                    <th>預估淨獲利</th>
                 </tr>
             </thead>
             <tbody id="resultBody"></tbody>
@@ -167,10 +167,10 @@
     <div class="footer">
         <div class="footer-left">
             <strong>永義房屋斗六成功莊敬加盟店</strong>
-            斗六市成功二街126號
+            雲林縣斗六市成功二街 126 號
         </div>
         <div style="text-align:right;">
-            TSLA-PRP v2.0 | <span id="dateDisplay"></span><br>
+            製表日期：<span id="dateDisplay"></span><br>
             免責聲明：實際稅額以國稅局核定為準。
         </div>
     </div>
@@ -186,10 +186,15 @@
         const agencyVal = parseFloat(document.getElementById('agencyVal').value) || 0;
         const taxRateSelect = document.getElementById('taxRate');
         const taxVal = taxRateSelect.value;
+        const taxText = taxRateSelect.options[taxRateSelect.selectedIndex].text;
         const step = parseFloat(document.getElementById('stepValue').value) || 10;
-        const rows = parseInt(document.getElementById('rowCount').value) || 5;
+        const rows = parseInt(document.getElementById('rowCount').value) || 6;
 
         document.getElementById('dateDisplay').innerText = new Date().toLocaleDateString();
+
+        // 更新摘要
+        document.getElementById('sumLine1').innerHTML = `取得成本：買入 <b>${cost}</b> | 裝潢 <b>${reno}</b>`;
+        document.getElementById('sumLine2').innerHTML = `稅務設定：稅率 <b>${taxText.split(' ')[0]}</b> | 賣仲 <b>${agencyVal}%</b>`;
 
         const tbody = document.getElementById('resultBody');
         tbody.innerHTML = '';
@@ -207,7 +212,7 @@
             tr.innerHTML = `
                 <td class="col-price">${price}</td>
                 <td class="col-common">${sellAgency.toFixed(1)}</td>
-                <td class="col-common">${deduc.toFixed(1)}<span class="tag-small">AUTO-OPTIMIZED</span></td>
+                <td class="col-common">${deduc.toFixed(1)}<span class="tag-small">自動擇優認列</span></td>
                 <td class="col-common">${tax.toFixed(1)}</td>
                 <td class="col-net">${net.toFixed(1)}</td>
             `;
@@ -218,13 +223,13 @@
     async function handleMobileShare() {
         const target = document.getElementById('output-container');
         const canvas = await html2canvas(target, { 
-            scale: 3, useCORS: true, 
-            backgroundColor: "#ffffff",
+            scale: 3, 
+            useCORS: true,
             height: target.scrollHeight,
             windowHeight: target.scrollHeight 
         });
         canvas.toBlob(async (blob) => {
-            const file = new File([blob], 'TESLA_RealEstate_Report.png', { type: 'image/png' });
+            const file = new File([blob], '獲利試算報告.png', { type: 'image/png' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({ files: [file], title: '獲利試算報告' });
             }
@@ -234,14 +239,14 @@
     async function handlePCDownload() {
         const target = document.getElementById('output-container');
         const canvas = await html2canvas(target, { 
-            scale: 3, useCORS: true, 
-            backgroundColor: "#ffffff",
+            scale: 3, 
+            useCORS: true,
             height: target.scrollHeight,
             windowHeight: target.scrollHeight 
         });
         const a = document.createElement('a');
         a.href = canvas.toDataURL("image/png");
-        a.download = `TESLA_Report_${new Date().getTime()}.png`;
+        a.download = `獲利試算報告_${new Date().getTime()}.png`;
         a.click();
     }
 
