@@ -65,7 +65,6 @@
             box-sizing: border-box;
         }
 
-        /* 浮水印 */
         .watermark-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -84,23 +83,27 @@
             opacity: 0.04; 
         }
 
+        /* 修正後的頭部排版：上下置中 */
         .report-branding {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex-direction: column; /* 改為垂直排列 */
+            align-items: center;    /* 居中 */
+            justify-content: center;
             margin-bottom: 30px; 
             padding-bottom: 20px;
             border-bottom: 1px solid #edf2f7;
+            text-align: center;
         }
 
-        .brand-logo-img { height: 65px; width: auto; }
+        .brand-logo-img { height: 70px; width: auto; margin-bottom: 15px; }
         .report-main-title {
             color: var(--yung-green);
-            font-size: 22px;
+            font-size: 26px;
             font-weight: 800;
+            margin: 0;
+            letter-spacing: 2px;
         }
 
-        /* 輸入區塊 */
         .control-panel { margin-bottom: 30px; }
         .input-section { margin-bottom: 25px; }
         .section-title {
@@ -142,7 +145,6 @@
             box-sizing: border-box;
         }
 
-        /* 儲存圖片時顯示的文字摘要樣式 */
         #textSummary {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
@@ -153,10 +155,9 @@
             line-height: 1.8;
             margin-bottom: 30px;
             color: #1a202c;
-            display: none; /* 平常不顯示 */
+            display: none; 
         }
 
-        /* 表格樣式 */
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th {
             color: #a0aec0;
@@ -166,20 +167,19 @@
             border-bottom: 2px solid #f1f5f9;
             text-align: center;
         }
-        td { padding: 15px 5px; border-bottom: 1px solid #f8fafc; text-align: center; }
+        td { padding: 18px 5px; border-bottom: 1px solid #f8fafc; text-align: center; }
         
-        .col-price { color: var(--premium-blue); font-weight: 800; font-size: 16px; }
-        .col-net-profit { color: var(--yung-red) !important; font-weight: 800 !important; font-size: 16px; }
+        .col-price { color: var(--premium-blue); font-weight: 800; font-size: 17px; }
+        .col-net-profit { color: var(--yung-red) !important; font-weight: 800 !important; font-size: 17px; }
         .highlight-row { background-color: #fffbeb !important; }
         .col-formula { display: block; font-size: 9px; color: #cbd5e1; margin-top: 3px; }
 
-        /* A4 儲存模式 */
         .export-mode { width: 850px !important; padding: 60px 80px !important; }
         .export-mode .control-panel .input-section { display: none !important; }
-        .export-mode #textSummary { display: block !important; } /* 儲存時強制顯示摘要 */
+        .export-mode #textSummary { display: block !important; } 
         .export-mode .wm-logo { top: 58%; width: 520px; }
-        .export-mode .report-main-title { font-size: 28px; }
-        .export-mode .brand-logo-img { height: 80px; }
+        .export-mode .report-main-title { font-size: 30px; }
+        .export-mode .brand-logo-img { height: 85px; }
 
         .footer-info {
             margin-top: 40px;
@@ -196,6 +196,7 @@
             #full-report-area:not(.export-mode) .input-grid { grid-template-columns: 1fr; }
             #full-report-area:not(.export-mode) .grid-three { grid-template-columns: 1fr !important; }
             .wm-logo { width: 250px; top: 85%; }
+            .report-main-title { font-size: 20px; }
         }
     </style>
 </head>
@@ -282,10 +283,6 @@
         </div>
 
         <div class="capture-area">
-            <div class="report-header" style="text-align:center; margin-bottom:20px;">
-                <div style="font-size:16px; color:var(--yung-red); font-weight:700; margin-bottom:5px;">(成屋專用) 稅務試算對照表</div>
-                <div style="font-size:12px; color:var(--text-sub); background:#f8fafc; display:inline-block; padding:4px 12px; border-radius:50px;">系統已自動為您選擇最優的抵扣費用</div>
-            </div>
             <table>
                 <thead>
                     <tr>
@@ -321,12 +318,10 @@
         const reno = parseFloat(document.getElementById('renovationCost').value) || 0;
         const buyAgency = parseFloat(document.getElementById('buyAgencyFee').value) || 0;
         const buyOther = parseFloat(document.getElementById('buyOtherFees').value) || 0;
-        
         const taxSelect = document.getElementById('taxRate');
         const taxRate = parseFloat(taxSelect.value) / 100 || 0;
         const taxText = taxSelect.options[taxSelect.selectedIndex].text;
         const isSelfUse = (taxSelect.value === '10');
-
         const agencyFeeType = document.getElementById('agencyFeeType').value;
         const agencyRate = parseFloat(document.getElementById('agencyRate').value) || 0;
         const otherSellFee = parseFloat(document.getElementById('otherSellingFees').value) || 0;
@@ -334,7 +329,6 @@
         const stepValue = parseFloat(document.getElementById('stepValue').value) || 0;
         const rowCount = parseInt(document.getElementById('rowCount').value) || 8;
 
-        // 🔥 關鍵修復：同步數據到隱藏摘要區，確保儲存圖片時看得到 🔥
         document.getElementById('s_cost').innerText = costPrice;
         document.getElementById('s_reno').innerText = reno;
         document.getElementById('s_buyAgency').innerText = buyAgency;
@@ -377,9 +371,9 @@
 
     function saveAsImage() {
         document.querySelectorAll('input').forEach(i => i.blur());
-        generateTable(); // 先生成一遍數據確保摘要同步
+        generateTable();
         const area = document.getElementById('full-report-area');
-        area.classList.add('export-mode'); // 開啟 A4 模式
+        area.classList.add('export-mode');
 
         setTimeout(() => {
             html2canvas(area, {
@@ -390,10 +384,12 @@
                 height: area.offsetHeight 
             }).then(canvas => {
                 let link = document.createElement('a');
-                link.download = `獲利對照表_${costPrice.value}萬_${new Date().getTime()}.png`;
+                link.download = `獲利對照表_${new Date().getTime()}.png`;
                 link.href = canvas.toDataURL('image/png');
+                document.body.appendChild(link);
                 link.click();
-                area.classList.remove('export-mode'); // 恢復正常手機比例
+                document.body.removeChild(link);
+                area.classList.remove('export-mode');
             }).catch(() => area.classList.remove('export-mode'));
         }, 500); 
     }
