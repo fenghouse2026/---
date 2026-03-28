@@ -3,109 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>專業版房地合一精算 - 永義房屋</title>
+    <title>永義房屋 - 獲利試算巔峰版</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
             --apple-blue: #0071e3;
+            --apple-red: #ff3b30;
             --yung-green: #008C4A;
-            --yung-red: #D82A29;
             --yung-gold: #FDB913;
-            --glass-bg: rgba(255, 255, 255, 0.75);
-            --glass-border: rgba(253, 185, 19, 0.3);
-            --text-dark: #1d1d1f;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-stroke: rgba(255, 255, 255, 0.4);
+            --text-main: #1d1d1f;
+            --text-note: #86868b;
         }
 
+        /* 💡 巔峰背景：動態光影 */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro TC", "PingFang TC", sans-serif;
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            color: var(--text-dark); margin: 0; padding: 0;
-            min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            font-family: -apple-system, "SF Pro TC", "PingFang TC", sans-serif;
+            background: #f5f5f7;
+            margin: 0; padding: 0; min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden; -webkit-font-smoothing: antialiased;
         }
 
-        /* 控制按鈕組：對齊 800px 寬度 */
-        .ui-controls { width: 800px; padding: 30px 0; z-index: 10; }
-        .btn-group { display: flex; gap: 12px; margin-bottom: 25px; }
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 20%, #fff9e6 0%, transparent 40%),
+                        radial-gradient(circle at 80% 80%, #fff3d1 0%, transparent 40%);
+            z-index: -1;
+        }
+
+        /* 🍎 按鈕組：iOS 系統級質感 */
+        .ui-controls { width: 800px; padding: 40px 0; z-index: 10; }
+        .btn-group { display: flex; gap: 15px; margin-bottom: 30px; }
         .btn-group button { 
-            border: none; padding: 14px 0; border-radius: 18px; cursor: pointer; 
-            font-size: 16px; font-weight: 700; flex: 1; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+            border: none; padding: 16px 0; border-radius: 18px; cursor: pointer; 
+            font-size: 17px; font-weight: 600; flex: 1; transition: all 0.3s;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
-        /* 重新計算 */
         .btn-calc { background: var(--apple-blue); color: white; }
-        /* 手機儲存相片 */
         .btn-share { background: white; color: var(--apple-blue); border: 1.5px solid var(--apple-blue) !important; }
-        /* 電腦儲存相片 */
         .btn-pc { background: #1d1d1f; color: white; }
-        .btn-group button:hover { transform: translateY(-2px); opacity: 0.95; }
+        .btn-group button:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
 
         /* 雙欄控制面板 */
         .control-panel { 
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            padding: 35px; border-radius: 32px; border: 1px solid var(--glass-border);
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px 30px;
-            margin-bottom: 30px; box-shadow: 0 10px 30px rgba(253, 185, 19, 0.1);
+            background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+            padding: 40px; border-radius: 35px; border: 1px solid var(--glass-stroke);
+            display: grid; grid-template-columns: 1fr 1fr; gap: 25px 40px;
+            margin-bottom: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.03);
         }
-        .input-group label { display: block; font-weight: 700; margin-bottom: 8px; font-size: 13px; color: #8a6d1a; }
-        .input-row { display: flex; gap: 8px; }
+        .input-group label { display: block; font-weight: 700; margin-bottom: 12px; font-size: 14px; color: var(--text-note); }
         input, select { 
-            width: 100%; padding: 13px; border-radius: 12px; border: 1.5px solid rgba(0,0,0,0.1);
-            font-size: 16px; box-sizing: border-box; background: rgba(255,255,255,0.85); color: var(--text-dark); font-weight: 600;
+            width: 100%; padding: 15px; border-radius: 14px; border: 1px solid #d2d2d7;
+            font-size: 18px; box-sizing: border-box; background: rgba(255,255,255,0.8); font-weight: 600;
         }
-        input:focus { border-color: var(--yung-gold); outline: none; box-shadow: 0 0 0 4px rgba(253, 185, 19, 0.2); }
+        input:focus { border-color: var(--apple-blue); outline: none; box-shadow: 0 0 0 4px rgba(0,113,227,0.15); }
 
-        /* 🍎 A4 輸出容器 */
+        /* 🍎 A4 輸出主容器 */
         #output-container {
-            width: 800px; 
-            background: #ffffff;
-            padding: 60px; box-sizing: border-box;
+            width: 800px; background: #ffffff; padding: 60px; box-sizing: border-box;
             display: flex; flex-direction: column; position: relative;
-            border-radius: 2px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.08); margin-bottom: 50px;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.08); margin-bottom: 60px;
         }
 
-        .report-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; border-bottom: 2px solid var(--yung-gold); padding-bottom: 20px; }
-        .brand-logo-img { height: 65px; }
-        .report-title { color: var(--yung-green); font-size: 32px; font-weight: 900; margin: 0; letter-spacing: -1px; }
+        .report-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 45px; }
+        .brand-logo-img { height: 75px; }
+        .report-title { color: var(--yung-green); font-size: 36px; font-weight: 900; margin: 0; letter-spacing: -1.5px; }
 
-        /* 條件摘要面板 */
+        /* 巔峰條件摘要 ( image_8d1119 ) */
         .summary-panel {
-            background: rgba(253, 185, 19, 0.05); border: 1.5px solid var(--glass-border);
-            padding: 30px; margin-bottom: 45px; border-radius: 20px;
+            background: #fbfbfd; border: 1px solid #f2f2f7;
+            padding: 35px; margin-bottom: 50px; border-radius: 28px;
         }
-        .summary-title { font-size: 24px; font-weight: 800; color: var(--yung-green); margin-bottom: 12px; display: block; }
-        .summary-line { font-size: 19px; color: #444; font-weight: 600; line-height: 2.2; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 10px; margin-top: 10px; }
-        .summary-line b { color: var(--text-dark); font-size: 21px; margin: 0 4px; font-weight: 800; }
+        .summary-title { font-size: 26px; font-weight: 800; color: var(--yung-green); margin-bottom: 20px; display: block; }
+        .summary-row { display: flex; border-top: 1px solid #eee; padding: 15px 0; }
+        .summary-line { flex: 1; font-size: 20px; color: #424245; font-weight: 500; }
+        .summary-line b { color: var(--text-main); font-size: 22px; font-weight: 800; margin: 0 5px; }
 
-        /* 報表內容 */
-        .report-content { flex-grow: 1; position: relative; }
-        .watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 75%; opacity: 0.1; pointer-events: none; z-index: 0; }
+        /* 表格設計 ( image_8dfa51 ) */
+        table { width: 100%; border-collapse: separate; border-spacing: 0 20px; position: relative; z-index: 1; table-layout: fixed; }
+        th { padding: 15px 5px; text-align: center; vertical-align: top; border-bottom: 1.5px solid #f2f2f7; }
+        .th-title { font-size: 16px; color: var(--text-main); font-weight: 700; display: block; margin-bottom: 6px; }
+        .th-note { font-size: 11px; color: #a1a1a6; font-weight: 500; display: block; letter-spacing: 0.2px; }
 
-        table { width: 100%; border-collapse: separate; border-spacing: 0 15px; position: relative; z-index: 1; table-layout: fixed; }
-        th { font-size: 15px; color: #8e8e93; font-weight: 600; padding: 12px 5px; text-align: center; border-bottom: 1.5px solid #f2f2f7; }
-        td { padding: 25px 5px; text-align: center; vertical-align: middle; border-bottom: 1px solid rgba(0,0,0,0.02); }
-        
-        .col-price { font-size: 28px; color: #1c3d73; font-weight: 700; }
-        .col-net { font-size: 32px; color: var(--yung-red); font-weight: 900; }
+        td { padding: 30px 5px; text-align: center; vertical-align: middle; border-bottom: 1px solid #fbfbfd; }
+        .col-price { font-size: 32px; color: #1c3d73; font-weight: 800; letter-spacing: -1.5px; }
+        .col-net { font-size: 36px; color: var(--apple-red); font-weight: 900; letter-spacing: -1.5px; }
+        .col-data { font-size: 22px; color: #424245; font-weight: 600; }
         
         .tag-pill {
-            display: inline-block; font-size: 11px; font-weight: 800;
-            background: rgba(0, 140, 74, 0.1); color: var(--yung-green);
-            padding: 3px 10px; border-radius: 8px; margin-top: 5px;
+            display: inline-block; font-size: 12px; font-weight: 800;
+            background: rgba(0, 140, 74, 0.08); color: var(--yung-green);
+            padding: 4px 12px; border-radius: 8px; margin-top: 8px;
         }
 
+        /* 頁腳 */
         .footer { 
-            margin-top: 40px; padding-top: 30px; border-top: 1.5px solid #f2f2f7;
-            display: flex; justify-content: space-between; align-items: flex-end; color: #8e8e93; font-size: 14px;
+            margin-top: 60px; padding-top: 40px; border-top: 1.5px solid #f2f2f7;
+            display: flex; justify-content: space-between; align-items: flex-end; color: #86868b; font-size: 15px;
         }
-        .footer strong { font-size: 20px; color: var(--text-dark); display: block; margin-bottom: 6px; font-weight: 700; }
+        .footer strong { font-size: 22px; color: var(--text-main); display: block; margin-bottom: 8px; font-weight: 800; }
+        .watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; opacity: 0.08; pointer-events: none; z-index: 0; }
 
         @media (max-width: 800px) {
             .ui-controls { width: 95%; }
-            #output-container { transform: scale(0.42); transform-origin: top center; margin-bottom: -650px; }
+            #output-container { transform: scale(0.45); transform-origin: top center; margin-bottom: -500px; }
         }
     </style>
 </head>
@@ -125,17 +128,10 @@
         <div class="input-group"><label>買入規費 (萬)</label><input type="number" id="buyFe" value="0" oninput="generateTable()"></div>
         <div class="input-group"><label>基準成交預估 (萬)</label><input type="number" id="basePrice" value="1500" oninput="generateTable()"></div>
         <div class="input-group">
-            <label>顯示筆數 / 級距</label>
-            <div class="input-row">
-                <input type="number" id="rowCount" value="6" oninput="generateTable()" style="flex:1;">
-                <select id="stepValue" onchange="generateTable()" style="flex:1;"><option value="5">5萬</option><option value="10" selected>10萬</option></select>
-            </div>
-        </div>
-        <div class="input-group">
             <label>賣方服務費</label>
-            <div class="input-row">
-                <select id="feeType" onchange="generateTable()" style="flex:0.8;"><option value="percent">%</option><option value="fixed">萬</option></select>
-                <input type="number" id="agencyVal" value="4" oninput="generateTable()" style="flex:1.2;">
+            <div style="display:flex; gap:10px;">
+                <select id="feeType" onchange="generateTable()" style="flex:0.7;"><option value="percent">%</option><option value="fixed">萬</option></select>
+                <input type="number" id="agencyVal" value="4" oninput="generateTable()" style="flex:1.3;">
             </div>
         </div>
         <div class="input-group">
@@ -144,9 +140,10 @@
                 <option value="45">45% (持有 2 年內)</option>
                 <option value="35">35% (持有 2-5 年)</option>
                 <option value="20" selected>20% (持有超過 5 年)</option>
-                <option value="10">設籍且自住滿 6 年 (400 萬免稅額) 10%</option>
+                <option value="10">設籍自住滿 6 年 (400 萬免稅) 10%</option>
             </select>
         </div>
+        <div class="input-group"><label>顯示筆數</label><input type="number" id="rowCount" value="6" oninput="generateTable()"></div>
     </div>
 </div>
 
@@ -158,8 +155,14 @@
 
     <div class="summary-panel">
         <span class="summary-title">報告設定條件：</span>
-        <div class="summary-line" id="sumLine1">取得：買入 <b>886</b> | 裝潢 <b>0</b> | 買仲 <b>0</b> | 買規 <b>0</b></div>
-        <div class="summary-line" id="sumLine2">稅務：稅率 <b>20%</b> | 賣仲費 <b>4%</b></div>
+        <div class="summary-row">
+            <div class="summary-line" id="sumLine1">取得成本：買入 <b>886</b> | 裝潢 <b>0</b></div>
+            <div class="summary-line" id="sumLine2">買方稅費：仲介 <b>0</b> | 規費 <b>0</b></div>
+        </div>
+        <div class="summary-row">
+            <div class="summary-line" id="sumLine3">稅務設定：稅率 <b>20%</b></div>
+            <div class="summary-line" id="sumLine4">賣方服務：<b>4%</b></div>
+        </div>
     </div>
 
     <div class="report-content">
@@ -167,11 +170,11 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width:22%">成交預估</th>
-                    <th style="width:18%">服務費</th>
-                    <th style="width:20%">抵扣費用</th>
-                    <th style="width:20%">房地稅額</th>
-                    <th style="width:20%">最終淨獲利</th>
+                    <th><span class="th-title">成交價</span><span class="th-note">(預估成交金額)</span></th>
+                    <th><span class="th-title">實付費用</span><span class="th-note">(仲介費+規費)</span></th>
+                    <th><span class="th-title">抵扣費用</span><span class="th-note">(擇優:實際或3%)</span></th>
+                    <th><span class="th-title">房地稅額</span><span class="th-note">(所得 × 稅率)</span></th>
+                    <th><span class="th-title">淨獲利</span><span class="th-note">(賣價-成本-費-稅)</span></th>
                 </tr>
             </thead>
             <tbody id="resultBody"></tbody>
@@ -181,7 +184,7 @@
     <div class="footer">
         <div class="footer-left">
             <strong>永義房屋斗六成功莊敬加盟店</strong>
-            承峰不動產仲介有限公司 | 斗六市成功二街126號
+            雲林縣斗六市成功二街126號
         </div>
         <div style="text-align:right;">
             製表時間：<span id="dateDisplay"></span><br>
@@ -202,34 +205,34 @@
         const taxRateSelect = document.getElementById('taxRate');
         const taxVal = parseFloat(taxRateSelect.value);
         const taxText = taxRateSelect.options[taxRateSelect.selectedIndex].text;
-        const step = parseFloat(document.getElementById('stepValue').value) || 10;
         const rows = parseInt(document.getElementById('rowCount').value) || 6;
 
         document.getElementById('dateDisplay').innerText = new Date().toLocaleDateString();
-        document.getElementById('sumLine1').innerHTML = `取得：買入 <b>${cost}</b> | 裝潢 <b>${reno}</b> | 買仲 <b>${buyAg}</b> | 買規 <b>${buyFe}</b>`;
-        const feeDisplay = (feeType === 'percent') ? `${agencyVal}%` : `${agencyVal}萬`;
-        document.getElementById('sumLine2').innerHTML = `稅務：稅率 <b>${taxText.split(' ')[0]}</b> | 賣仲費 <b>${feeDisplay}</b>`;
+        
+        // 摘要面板連動
+        document.getElementById('sumLine1').innerHTML = `取得成本：買入 <b>${cost}</b> | 裝潢 <b>${reno}</b>`;
+        document.getElementById('sumLine2').innerHTML = `買方稅費：仲介 <b>${buyAg}</b> | 規費 <b>${buyFe}</b>`;
+        document.getElementById('sumLine3').innerHTML = `稅務設定：稅率 <b>${taxText.split(' ')[0]}</b>`;
+        document.getElementById('sumLine4').innerHTML = `賣方服務：<b>${feeType === 'percent' ? agencyVal + '%' : agencyVal + '萬'}</b>`;
 
         const tbody = document.getElementById('resultBody');
         tbody.innerHTML = '';
 
         for(let i=0; i < rows; i++) {
-            let price = base - (i * step);
+            let price = base - (i * 10);
             let sellAgency = (feeType === 'percent') ? (price * (agencyVal / 100)) : agencyVal;
             let deduc = Math.max(sellAgency, Math.min(price * 0.03, 30));
-            let totalAcq = cost + reno + buyAg + buyFe;
-            let rawProfit = price - totalAcq - deduc;
-            
+            let totalCost = cost + reno + buyAg + buyFe;
+            let rawProfit = price - totalCost - deduc;
             let tax = (taxVal === 10) ? Math.max(0, rawProfit - 400) * 0.1 : Math.max(0, rawProfit) * (taxVal / 100);
-            let net = price - totalAcq - sellAgency - tax;
+            let net = price - totalCost - sellAgency - tax;
 
             let tr = document.createElement('tr');
-            const isAgencyOptimized = sellAgency >= Math.min(price * 0.03, 30);
             tr.innerHTML = `
                 <td class="col-price">${price}</td>
-                <td style="font-weight:600; color:#444;">${sellAgency.toFixed(1)}</td>
-                <td>${deduc.toFixed(1)}<br><span class="tag-pill">${isAgencyOptimized ? '採服務費' : '採免稅額'}</span></td>
-                <td style="font-weight:600; color:#444;">${tax.toFixed(1)}</td>
+                <td class="col-data">${sellAgency.toFixed(1)}</td>
+                <td><span class="col-data">${deduc.toFixed(1)}</span><br><span class="tag-pill">${sellAgency >= Math.min(price * 0.03, 30) ? '採服務費' : '採免稅額'}</span></td>
+                <td><span class="col-data">${tax.toFixed(1)}</span><br><span class="th-note">(${taxText.split(' ')[0]} 稅率)</span></td>
                 <td class="col-net">${net.toFixed(1)}</td>
             `;
             tbody.appendChild(tr);
@@ -238,22 +241,19 @@
 
     async function captureAndProcess() {
         const target = document.getElementById('output-container');
-        const originalTransform = target.style.transform;
-        const originalMargin = target.style.marginBottom;
-        target.style.transform = 'none';
-        target.style.marginBottom = '0';
-
+        // 核心修正：強迫 canvas 在擷取時不要考慮瀏覽器視角，只考慮內容
         const canvas = await html2canvas(target, { 
             scale: 3, 
             useCORS: true, 
             backgroundColor: "#ffffff",
             width: 800,
-            height: target.offsetHeight,
-            windowHeight: target.offsetHeight 
+            height: target.scrollHeight,
+            onclone: (clonedDoc) => {
+                const el = clonedDoc.getElementById('output-container');
+                el.style.transform = 'none';
+                el.style.margin = '0';
+            }
         });
-
-        target.style.transform = originalTransform;
-        target.style.marginBottom = originalMargin;
         return canvas;
     }
 
@@ -262,14 +262,14 @@
         canvas.toBlob(async (blob) => {
             const file = new File([blob], '獲利報告.png', { type: 'image/png' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                await navigator.share({ files: [file], title: '獲利試算報告' });
+                await navigator.share({ files: [file], title: '獲利試算' });
             }
         });
     }
 
     async function handlePCDownload() {
         const canvas = await captureAndProcess();
-        const a = document.createElement('a'); a.href = canvas.toDataURL(); a.download = '獲利報告.png'; a.click();
+        const a = document.createElement('a'); a.href = canvas.toDataURL(); a.download = '永義房屋報告.png'; a.click();
     }
     window.onload = generateTable;
 </script>
