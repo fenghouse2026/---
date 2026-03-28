@@ -119,21 +119,13 @@
         .export-mode #textSummary { display: block !important; }
         .export-mode .wm-logo { top: 60%; width: 550px; }
 
-        /* 🔥 更新後的 Footer 樣式 🔥 */
         .footer-info {
             margin-top: 60px; padding-top: 30px; border-top: 1px solid #f1f5f9;
             display: flex; justify-content: space-between; align-items: flex-end;
-            color: #94a3b8; font-size: 12px; line-height: 1.6;
+            color: #94a3b8; font-size: 12px; line-height: 1.8;
         }
-        .footer-disclaimer {
-            text-align: right;
-            max-width: 400px;
-        }
-        .disclaimer-text {
-            font-size: 11px;
-            opacity: 0.8;
-            margin-top: 4px;
-        }
+        .footer-disclaimer { text-align: right; max-width: 400px; }
+        .disclaimer-text { font-size: 11px; opacity: 0.8; margin-top: 4px; }
 
         @media (max-width: 600px) {
             #full-report-area:not(.export-mode) { padding: 40px 20px; }
@@ -226,7 +218,9 @@
 
         <div class="capture-area">
             <div style="text-align:center; margin-bottom:25px;">
-                <div style="font-size:11px; color:var(--text-sub); background:#f8fafc; display:inline-block; padding:5px 16px; border-radius:50px; font-weight:700;">系統已擇優認列抵扣費用</div>
+                <div style="font-size:11px; color:var(--text-sub); background:#f8fafc; border:1px solid #f1f5f9; display:inline-block; padding:5px 18px; border-radius:50px; font-weight:700;">
+                    💡 系統已自動擇優認列抵扣費用
+                </div>
             </div>
             <table>
                 <thead>
