@@ -69,9 +69,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='350' height='300'%3E%3Ctext transform='rotate(-30 150 150)' x='10' y='150' fill='black' fill-opacity='0.015' font-size='16' font-family='Microsoft JhengHei'%3E承峰不動產仲介有限公司 版權所有 非本公司員工禁止使用。%3C/text%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='350' height='250'%3E%3Ctext transform='rotate(-30 150 150)' x='-10' y='150' fill='black' fill-opacity='0.06' font-size='17' font-family='Microsoft JhengHei' font-weight='bold'%3E承峰不動產仲介有限公司 版權所有 非本公司員工禁止使用。%3C/text%3E%3C/svg%3E");
             background-repeat: repeat;
-            z-index: 10; 
+            z-index: 50; 
             pointer-events: none; 
         }
 
@@ -204,14 +204,11 @@
         
         .table-container {
             width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch; 
             margin-bottom: 10px;
         }
 
         table {
             width: 100%;
-            min-width: 650px; 
             border-collapse: collapse;
             text-align: center;
             font-size: 15px;
@@ -267,7 +264,7 @@
                 border-top: 6px solid var(--yung-yellow); 
             }
             #full-report-area::before {
-                background-size: 300px 257px; 
+                background-size: 280px 200px; 
             }
             .report-branding {
                 flex-direction: column;
@@ -278,14 +275,18 @@
             .brand-logo-img { height: 60px; }
             .report-main-title { font-size: 22px; text-align: center; }
             .control-panel { padding: 15px; }
-            table { font-size: 13px; } 
-            th, td { padding: 8px 4px; }
+            
+            table { font-size: 11px; width: 100%; } 
+            th, td { padding: 4px 1px; } 
+            .col-formula { font-size: 9px; margin-top: 2px; transform: scale(0.9); }
+            .dynamic-method { font-size: 9px; transform: scale(0.9); }
+            
             .footer-info {
                 flex-direction: column;
                 text-align: center;
                 gap: 8px;
             }
-            .footer-info div { text-align: center !important; }
+            .footer-info div { text-align: center !important; max-width: 100% !important; }
             .btn-group button { width: 100%; }
         }
     </style>
@@ -413,7 +414,7 @@
                             </th>
                             <th>
                                 抵扣費用(萬)
-                                <span class="col-formula">(擇優:仲介費或政府免稅額申報最高30萬)</span>
+                                <span class="col-formula">(擇優:仲介費或免稅額最高30萬)</span>
                             </th>
                             <th>
                                 課稅所得(萬)
@@ -439,8 +440,8 @@
                     <strong>承峰不動產仲介有限公司 (永義房屋斗六成功加盟店)</strong><br>
                     雲林縣斗六市成功二街126號
                 </div>
-                <div style="text-align: right; max-width: 60%; ">
-                    *免責聲明：本表數據僅供參考，並且請手動核算過，如因系統顯示/計算異常，實際稅額依國稅局核定為準，不負擔任何責任。<br>
+                <div style="text-align: right; max-width: 65%; ">
+                    *免責聲明：本表數據僅供參考，實際稅額依國稅局核定為準，如顯示/試算異常不負擔任何責任。<br>
                     *製表時間：<span id="dateDisplay"></span>
                 </div>
             </div>
@@ -530,12 +531,11 @@
             let statutoryExpense = Math.min(currentPrice * 0.03, 30); 
             let deductibleExpense = Math.max(actualSellingExpense, statutoryExpense); 
             
-            // 修改：動態判斷顯示為仲介費折抵或免稅額申報
             let deducMethod = "";
             if (actualSellingExpense >= statutoryExpense) {
-                deducMethod = "(本次採用仲介費折抵)";
+                deducMethod = "(採仲介費)";
             } else {
-                deducMethod = "(本次採用政府免稅額30萬)";
+                deducMethod = "(採免稅額)";
             }
 
             let taxBase = currentPrice - totalCost - deductibleExpense - landIncrement;
