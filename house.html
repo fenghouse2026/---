@@ -11,10 +11,11 @@
             --yung-green: #008C4A;  
             --yung-red: #D82A29;    
             --text-main: #1e293b;
-            --text-sub: #475569; /* 加深標籤與次要文字顏色 */
-            --header-dark: #334155; /* 加深表頭顏色，提高對比度 */
-            --premium-blue: #0f172a; 
-            --border-color: #cbd5e1; /* 加深底線顏色 */
+            --text-sub: #475569;
+            --header-dark: #1e293b;
+            /* 🔥 調整為質感靛海藍，確保長輩視認性 🔥 */
+            --premium-blue: #1e3a8a; 
+            --border-color: #cbd5e1;
         }
 
         body {
@@ -57,13 +58,13 @@
 
         .report-branding { display: flex; flex-direction: column; align-items: center; margin-bottom: 50px; text-align: center; }
         .brand-logo-img { height: 75px; margin-bottom: 15px; }
-        .report-main-title { color: var(--premium-blue); font-size: 28px; font-weight: 900; letter-spacing: 4px; margin: 0; }
+        .report-main-title { color: var(--premium-blue); font-size: 32px; font-weight: 900; letter-spacing: 4px; margin: 0; }
 
         .control-panel { margin-bottom: 40px; }
         .input-section { margin-bottom: 35px; }
         
         .section-title {
-            font-size: 12px; font-weight: 800; color: var(--yung-green);
+            font-size: 13px; font-weight: 800; color: var(--yung-green);
             margin-bottom: 20px; letter-spacing: 1px; display: flex; align-items: center;
         }
         .section-title::after { content: ""; flex: 1; height: 1px; background: #f1f5f9; margin-left: 10px; }
@@ -71,7 +72,7 @@
         .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px 35px; }
 
         .input-group label { 
-            font-weight: 700; font-size: 11px; color: var(--text-sub); 
+            font-weight: 700; font-size: 12px; color: var(--text-sub); 
             margin-bottom: 4px; display: block;
         }
 
@@ -79,7 +80,7 @@
             background: transparent;
             border: none; border-bottom: 1px solid var(--border-color);
             border-radius: 0; padding: 4px 0px; height: 32px;
-            font-size: 15px; font-weight: 700; color: var(--text-main);
+            font-size: 16px; font-weight: 700; color: var(--text-main);
             transition: all 0.3s ease; width: 100%; box-sizing: border-box;
         }
 
@@ -87,53 +88,64 @@
 
         #textSummary {
             background: #fafafa; border-radius: 10px; padding: 25px;
-            font-size: 15px; line-height: 1.8; margin-bottom: 35px;
+            font-size: 16px; line-height: 1.8; margin-bottom: 35px;
             display: none; border: 1px solid #f0f0f0;
         }
 
-        /* 🔥 表格設計修正：加深表頭顏色 🔥 */
-        table { width: 100%; border-collapse: separate; border-spacing: 0 6px; margin-top: 15px; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 15px; }
         th { 
-            color: var(--header-dark); /* 加深表頭 */
-            font-size: 12px; 
+            color: var(--header-dark); 
+            font-size: 14px; 
             font-weight: 800; 
-            padding: 10px; 
+            padding: 12px; 
             text-align: center; 
             border-bottom: 2px solid #f1f5f9;
         }
         td { 
-            padding: 18px 10px; text-align: center; background: #fff;
+            padding: 20px 10px; text-align: center; background: #fff;
             border-top: 1px solid #f8fafc; border-bottom: 1px solid #f8fafc;
+            vertical-align: middle;
+            font-size: 18px; 
+            font-weight: 600;
         }
         td:first-child { border-left: 1px solid #f8fafc; border-radius: 12px 0 0 12px; }
         td:last-child { border-right: 1px solid #f8fafc; border-radius: 0 12px 12px 0; }
         
-        .unit-label { font-size: 10px; color: #64748b; font-weight: 600; margin-left: 2px; }
-        .col-price { color: var(--premium-blue); font-weight: 900; font-size: 18px; }
-        .col-net-profit { color: var(--yung-red) !important; font-weight: 900 !important; font-size: 18px; }
+        .unit-label { font-size: 12px; color: #64748b; font-weight: 600; margin-left: 3px; }
+        .dynamic-subtext { display: block; font-size: 10px; color: #94a3b8; margin-top: 4px; font-weight: normal; }
+
+        /* 🔥 成交價：改為深靛藍並增加粗度 🔥 */
+        .col-price { color: var(--premium-blue); font-weight: 950; font-size: 22px !important; }
+        .col-net-profit { color: var(--yung-red) !important; font-weight: 950 !important; font-size: 22px !important; }
         
         .highlight-row td { background: #fffbeb !important; border-color: #fef3c7 !important; }
 
-        .export-mode { width: 850px !important; padding: 70px 80px !important; border-radius: 0 !important; }
-        .export-mode .control-panel { display: none !important; }
-        .export-mode #textSummary { display: block !important; visibility: visible !important; }
+        .export-mode { width: 850px !important; padding: 80px !important; border-radius: 0 !important; }
+        .export-mode .input-section { display: none !important; }
+        .export-mode #textSummary { display: block !important; visibility: visible !important; opacity: 1 !important; }
         .export-mode .wm-logo { top: 60%; width: 550px; }
 
         .footer-info {
             margin-top: 60px; padding-top: 30px; border-top: 1px solid #f1f5f9;
             display: flex; justify-content: space-between; align-items: flex-end;
-            color: var(--text-sub); font-size: 12px; line-height: 1.8;
+            color: var(--text-sub); font-size: 13px; line-height: 1.8;
         }
-        .footer-disclaimer { text-align: right; max-width: 400px; }
-        .disclaimer-text { font-size: 11px; opacity: 0.9; margin-top: 4px; }
+        .footer-branch { flex-shrink: 0; padding-right: 20px; }
+        .footer-disclaimer { text-align: right; flex-grow: 1; }
+        .disclaimer-text { font-size: 12px; opacity: 0.9; margin-top: 4px; white-space: nowrap; }
 
         @media (max-width: 600px) {
             body { padding: 20px 10px; }
-            #full-report-area:not(.export-mode) { padding: 40px 20px; }
+            #full-report-area:not(.export-mode) { padding: 40px 15px; }
             .input-grid { grid-template-columns: 1fr 1fr; gap: 15px; }
             .grid-three { grid-template-columns: repeat(3, 1fr) !important; gap: 10px !important;}
             .btn-group { flex-direction: column; align-items: center; }
             button { width: 100%; max-width: none; }
+            td { font-size: 16px; }
+            .col-price, .col-net-profit { font-size: 18px !important; }
+            .footer-info { flex-direction: column; align-items: flex-start; white-space: normal; }
+            .footer-disclaimer { text-align: left; margin-top: 15px; }
+            .disclaimer-text { white-space: normal; }
         }
     </style>
 </head>
@@ -157,7 +169,7 @@
 
         <div class="control-panel">
             <div id="textSummary">
-                <div style="font-size: 14px; color: var(--yung-green); font-weight: 800; margin-bottom: 10px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">報告設定條件</div>
+                <div style="font-size: 15px; color: var(--yung-green); font-weight: 800; margin-bottom: 10px; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px;">報告設定條件</div>
                 買入總價 <span id="s_cost" style="color:var(--premium-blue); font-weight:900;">-</span> 萬 | 
                 裝潢成本 <span id="s_reno" style="color:var(--premium-blue); font-weight:900;">-</span> 萬 |
                 房地合一稅率 <span id="s_tax" style="color:var(--yung-red); font-weight:900;">-</span> <br>
@@ -220,10 +232,10 @@
         </div>
 
         <div class="capture-area">
-            <div style="text-align:center; margin-bottom:25px;">
-                <div style="font-size:11px; color:var(--header-dark); background:#f8fafc; border:1px solid #f1f5f9; display:inline-block; padding:6px 18px; border-radius:50px; font-weight:700; line-height:1.5;">
+            <div style="text-align:center; margin-bottom:30px;">
+                <div style="font-size:12px; color:var(--header-dark); background:#f8fafc; border:1px solid #f1f5f9; display:inline-block; padding:8px 24px; border-radius:50px; font-weight:700; line-height:1.6;">
                     💡 系統已自動擇優認列抵扣費用<br>
-                    <span style="font-size:10px; font-weight:500; opacity:0.8;">(實付仲介費 vs 移轉費用3%最高30萬)</span>
+                    <span style="font-size:11px; font-weight:500; opacity:0.8;">(實付仲介費 vs 移轉費用3%最高30萬)</span>
                 </div>
             </div>
             <table>
@@ -242,7 +254,7 @@
             
             <div class="footer-info">
                 <div class="footer-branch">
-                    <strong style="color:var(--premium-blue); font-size: 14px;">永義房屋斗六成功莊敬加盟店</strong><br>
+                    <strong style="color:var(--premium-blue); font-size: 15px;">永義房屋斗六成功莊敬加盟店</strong><br>
                     <span>承峰不動產仲介有限公司 | 雲林縣斗六市成功二街126號</span>
                 </div>
                 <div class="footer-disclaimer">
@@ -275,8 +287,9 @@
         const buyAgency = parseFloat(document.getElementById('buyAgencyFee').value) || 0;
         const buyOther = parseFloat(document.getElementById('buyOtherFees').value) || 0;
         const taxSelect = document.getElementById('taxRate');
-        const taxRate = parseFloat(taxSelect.value) / 100 || 0;
-        const isSelfUse = (taxSelect.value === '10');
+        const currentTaxPercent = taxSelect.value; 
+        const taxRate = parseFloat(currentTaxPercent) / 100 || 0;
+        const isSelfUse = (currentTaxPercent === '10');
         const agencyFeeType = document.getElementById('agencyFeeType').value;
         const agencyRate = parseFloat(document.getElementById('agencyRate').value) || 0;
         const otherSellFee = parseFloat(document.getElementById('otherSellingFees').value) || 0;
@@ -298,6 +311,8 @@
             let actualSellingExp = (agencyFeeType === 'percent' ? (currentPrice * agencyRate / 100) : agencyRate) + otherSellFee;
             let statExp = Math.min(currentPrice * 0.03, 30);
             let deducExp = Math.max(actualSellingExp, statExp);
+            let deducMethodText = (actualSellingExp >= statExp) ? "(仲介費)" : "(移轉費用)";
+
             let taxBase = Math.max(0, currentPrice - totalAcquisitionCost - deducExp);
             if (isSelfUse) taxBase = Math.max(0, taxBase - 400);
             let tax = taxBase * taxRate;
@@ -307,10 +322,10 @@
             if (i === 0) tr.className = 'highlight-row';
             tr.innerHTML = `
                 <td class="col-price">${currentPrice}<span class="unit-label">萬</span></td>
-                <td>${actualSellingExp.toFixed(1)}</td>
+                <td>${actualSellingExp.toFixed(1)}<span class="dynamic-subtext">${deducMethodText}</span></td>
                 <td>${deducExp.toFixed(1)}</td>
                 <td>${taxBase.toFixed(1)}</td>
-                <td>${tax.toFixed(1)}</td>
+                <td>${tax.toFixed(1)}<span class="dynamic-subtext">(${currentTaxPercent}%)</span></td>
                 <td class="col-net-profit">${netProfit.toFixed(1)}<span class="unit-label">萬</span></td>
             `;
             tbody.appendChild(tr);
@@ -339,7 +354,7 @@
                 document.body.removeChild(link);
                 area.classList.remove('export-mode');
             }).catch(() => area.classList.remove('export-mode'));
-        }, 500); 
+        }, 600); 
     }
     window.onload = generateTable;
 </script>
