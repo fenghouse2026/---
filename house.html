@@ -62,7 +62,7 @@
             overflow: hidden; 
         }
 
-        /* 浮水印圖層 */
+        /* 浮水印圖層 (保持最上層) */
         .watermark-overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
@@ -71,15 +71,16 @@
             overflow: hidden;
         }
 
-        /* 中央 LOGO 浮水印 */
+        /* 中央 LOGO 浮水印 - 修改預設位置 */
         .wm-logo {
             position: absolute;
-            top: 50%;
+            top: 78%; /* 🔥 平常畫面中大幅往下移，直接壓在表格上 🔥 */
             left: 50%;
             transform: translate(-50%, -50%);
             width: 500px; 
             max-width: 80%;
             opacity: 0.08; 
+            transition: top 0.3s ease, width 0.3s ease; /* 讓移動有動畫感 */
         }
 
         /* 6 個文字浮水印 */
@@ -100,6 +101,41 @@
         .wm-4 { top: 48%; right: -5%; }
         .wm-5 { bottom: 12%; left: 5%; }
         .wm-6 { bottom: 12%; right: 5%; }
+
+        /* =======================================================
+           🔥 A4 匯出模式的專屬魔法 (只有截圖的那 0.3 秒會觸發) 🔥
+           ======================================================= */
+        .export-mode {
+            width: 800px !important; 
+            max-width: 800px !important;
+            min-height: 1131px !important; 
+            margin: 0 auto;
+            padding: 50px !important; 
+        }
+        .export-mode .input-grid, 
+        .export-mode .control-panel h2 {
+            display: none !important; 
+        }
+        .export-mode .control-panel {
+            background: transparent !important;
+            border: none !important;
+            padding: 0 !important;
+            margin-bottom: 10px !important;
+        }
+        .export-mode .print-summary {
+            display: block !important; 
+            font-size: 16px;
+            margin-bottom: 30px;
+            background: #fff;
+            border-left: 5px solid var(--yung-green);
+            padding: 15px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .export-mode .wm-logo {
+            top: 58%; /* 🔥 因為截圖時上方輸入框不見了，版面變短，讓它回到表格相對應的中間位置 🔥 */
+            width: 550px; 
+        }
+        /* ======================================================= */
 
         .report-branding {
             display: flex;
@@ -254,19 +290,25 @@
 
         @media (max-width: 768px) {
             body { padding: 10px; }
-            #full-report-area { padding: 15px; border-top: 6px solid var(--yung-yellow); }
-            .wm-logo { width: 300px; } 
-            .wm-text { font-size: 13px; } 
-            .report-branding { flex-direction: column; gap: 10px; padding-bottom: 10px; margin-bottom: 10px; }
-            .brand-logo-img { height: 60px; }
-            .report-main-title { font-size: 22px; text-align: center; }
-            .control-panel { padding: 15px; }
-            table { font-size: 11px; width: 100%; } 
-            th, td { padding: 4px 1px; } 
-            .col-formula { font-size: 9px; margin-top: 2px; transform: scale(0.9); }
-            .dynamic-method { font-size: 9px; transform: scale(0.9); }
-            .footer-info { flex-direction: column; text-align: center; gap: 8px; }
-            .footer-info div { text-align: center !important; max-width: 100% !important; }
+            #full-report-area:not(.export-mode) { padding: 15px; border-top: 6px solid var(--yung-yellow); }
+            
+            /* 手機版一般模式，浮水印高度也微調 */
+            #full-report-area:not(.export-mode) .wm-logo { 
+                width: 300px; 
+                top: 82%; 
+            } 
+            #full-report-area:not(.export-mode) .wm-text { font-size: 13px; } 
+            
+            #full-report-area:not(.export-mode) .report-branding { flex-direction: column; gap: 10px; padding-bottom: 10px; margin-bottom: 10px; }
+            #full-report-area:not(.export-mode) .brand-logo-img { height: 60px; }
+            #full-report-area:not(.export-mode) .report-main-title { font-size: 22px; text-align: center; }
+            #full-report-area:not(.export-mode) .control-panel { padding: 15px; }
+            #full-report-area:not(.export-mode) table { font-size: 11px; width: 100%; } 
+            #full-report-area:not(.export-mode) th, #full-report-area:not(.export-mode) td { padding: 4px 1px; } 
+            #full-report-area:not(.export-mode) .col-formula { font-size: 9px; margin-top: 2px; transform: scale(0.9); }
+            #full-report-area:not(.export-mode) .dynamic-method { font-size: 9px; transform: scale(0.9); }
+            #full-report-area:not(.export-mode) .footer-info { flex-direction: column; text-align: center; gap: 8px; }
+            #full-report-area:not(.export-mode) .footer-info div { text-align: center !important; max-width: 100% !important; }
             .btn-group button { width: 100%; }
         }
     </style>
@@ -276,7 +318,7 @@
 <div class="app-container">
     <div class="btn-group">
         <button onclick="generateTable()">重新產生試算表</button>
-        <button class="btn-red" onclick="saveAsImage()">一鍵儲存完整報告圖片</button>
+        <button class="btn-red" onclick="saveAsImage()">一鍵儲存A4完整報告</button>
     </div>
 
     <div id="full-report-area">
@@ -302,12 +344,13 @@
             <h2>一、成屋專屬參數設定</h2>
             
             <div id="textSummary" class="print-summary" style="display:none;">
-                <strong>當前設定：</strong> 買入總價 <span id="s_cost">1000</span> 萬 | 
+                <strong>報告參數設定條件：</strong><br>
+                買入總價 <span id="s_cost" style="color:var(--table-blue); font-weight:bold;">1000</span> 萬 | 
                 買方仲介費 <span id="s_buyAgency">20</span> 萬 | 
                 買方規費 <span id="s_buyOther">10</span> 萬 | 
-                裝潢 <span id="s_reno">50</span> 萬 | 
+                裝潢 <span id="s_reno">50</span> 萬 <br>
                 土增稅 <span id="s_land">0</span> 萬 | 
-                稅率 <span id="s_tax">35</span>% | 
+                稅率 <span id="s_tax" style="color:var(--yung-red); font-weight:bold;">35</span>% | 
                 賣方仲介費 <span id="s_sellAgency">4</span> <span id="s_sellAgencyType">%</span> | 
                 賣方規費 <span id="s_sellOther">0</span> 萬
             </div>
@@ -458,7 +501,6 @@
         document.getElementById('s_sellAgency').innerText = inputs.agencyRate.value;
         document.getElementById('s_sellAgencyType').innerText = inputs.agencyFeeType.value === 'percent' ? '%' : '萬';
         document.getElementById('s_sellOther').innerText = inputs.otherSellingFees.value;
-        document.getElementById('textSummary').style.display = 'block';
 
         const costPrice = parseFloat(inputs.costPrice.value) || 0;
         const buyFees = (parseFloat(inputs.buyAgencyFee.value) || 0) + 
@@ -518,23 +560,19 @@
     }
 
     function saveAsImage() {
-        // 先強制讓所有輸入框失焦，確保手機鍵盤收起
         document.querySelectorAll('input').forEach(input => input.blur());
         generateTable();
-        
         const captureElement = document.getElementById('full-report-area');
         
-        // 滾動到最上方避免跑版
+        captureElement.classList.add('export-mode');
         window.scrollTo(0, 0);
 
-        // 延長等待時間至 300ms，確保手機鍵盤完全收回且版面高度重算完成
         setTimeout(() => {
             html2canvas(captureElement, {
                 scale: 2, 
                 backgroundColor: "#ffffff", 
                 useCORS: true, 
                 logging: false, 
-                // 🔥 修改重點：強制鎖定成實際元素的寬高，避免手機抓到過長的虛擬頁面高度
                 width: captureElement.offsetWidth,  
                 height: captureElement.offsetHeight 
             }).then(canvas => {
@@ -544,8 +582,11 @@
                 document.body.appendChild(link);
                 link.click();
                 document.body.removeChild(link);
+                
+                captureElement.classList.remove('export-mode');
             }).catch(err => {
                 alert('截圖失敗！建議使用 Chrome 瀏覽器。');
+                captureElement.classList.remove('export-mode');
             });
         }, 300); 
     }
