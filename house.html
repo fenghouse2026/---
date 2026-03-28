@@ -53,11 +53,6 @@
             align-items: center;
             justify-content: center;
         }
-        .btn-group button:active { transform: translateY(1px); opacity: 0.9; }
-        
-        .btn-calc { background-color: var(--flat-green); }
-        .btn-save { background-color: var(--flat-blue); } 
-        .btn-pc { background-color: var(--flat-dark); }    
 
         .report-branding { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--yung-red); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         .brand-logo-img { height: 80px; }
@@ -70,11 +65,14 @@
         .input-group { display: flex; flex-direction: column; }
         .input-group label { font-weight: 900; margin-bottom: 12px; font-size: 24px; color: #444; }
         
-        /* 仲介費切換選擇器樣式 */
-        .agency-mode-select {
-            font-size: 18px; padding: 4px 8px; margin-left: 10px; 
-            height: auto; width: auto; vertical-align: middle;
-            border: 1px solid #ccc; border-radius: 4px;
+        /* 巨大化的仲介費切換區 */
+        .agency-row {
+            grid-column: span 2; /* 讓它橫跨兩列，空間變大 */
+            background: #f0f7f4;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid var(--yung-green);
+            margin-bottom: 20px;
         }
 
         input, select { 
@@ -89,14 +87,23 @@
             outline: none; 
         }
 
-        .input-with-unit { position: relative; display: flex; align-items: center; }
-        .input-unit-label { position: absolute; right: 20px; font-size: 24px; font-weight: bold; color: #888; pointer-events: none; }
+        /* 專門給比例/固定選單的大樣式 */
+        .large-select {
+            height: 70px;
+            background-color: var(--yung-green);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .input-with-unit { position: relative; display: flex; align-items: center; gap: 10px; }
+        .unit-text { font-size: 36px; font-weight: 900; color: var(--yung-green); min-width: 50px; }
 
         .report-area { position: relative; margin-top: 10px; border-top: 8px solid #fdb913; padding-top: 30px; background-color: #ffffff; }
         table { width: 100%; border-collapse: collapse; position: relative; z-index: 2; table-layout: fixed; }
         th, td { padding: 18px 5px; text-align: center; border-bottom: 1px solid #e2e8f0; }
         th { color: var(--brand-gray); font-size: 18px; font-weight: bold; border-bottom: 2px solid #a0aec0; border-top: 2px solid #a0aec0; background: #fff; }
-        td { font-size: 24px; font-weight: bold; color: #1e293b; white-space: nowrap; background: rgba(255,255,255,0.7); }
+        td { font-size: 24px; font-weight: bold; color: #1e293b; white-space: nowrap; }
         
         .highlight-row td { background-color: #fff4b3 !important; }
         .col-price { color: #2c5282; font-size: 28px; }
@@ -137,6 +144,7 @@
 
     <div class="control-panel">
         <h2>一、成屋專屬參數設定</h2>
+        
         <div class="input-grid">
             <div class="input-group"><label>買入總價 (萬元)</label><input type="number" id="costPrice" value="886"></div>
             <div class="input-group"><label>可列舉裝潢成本 (萬元)</label><input type="number" id="renovationCost" value="0"></div>
@@ -155,20 +163,19 @@
                     <option value="10">10% (自用滿6年優惠)</option>
                 </select>
             </div>
-            <div class="input-group">
-                <label>
-                    賣方仲介費 
-                    <select id="agencyMode" class="agency-mode-select" onchange="updateAgencyUnit()">
-                        <option value="percent">比例 (%)</option>
-                        <option value="fixed">固定 (萬)</option>
-                    </select>
-                </label>
+            <div class="input-group"><label>賣方其他規費 (萬元)</label><input type="number" id="otherSellingFees" value="0"></div>
+
+            <div class="agency-row">
+                <label style="font-size: 28px; font-weight: 900; color: var(--yung-green); display: block; margin-bottom: 15px;">賣方仲介費計算方式</label>
                 <div class="input-with-unit">
-                    <input type="number" id="agencyValue" value="4" style="width: 100%;">
-                    <span id="agencyUnit" class="input-unit-label">%</span>
+                    <select id="agencyMode" class="large-select" style="flex: 1;" onchange="updateAgencyUnit()">
+                        <option value="percent">按成交總價比例 (%)</option>
+                        <option value="fixed">按議定固定金額 (萬元)</option>
+                    </select>
+                    <input type="number" id="agencyValue" value="4" style="flex: 1; height: 70px; font-size: 40px;">
+                    <span id="agencyUnit" class="unit-text">%</span>
                 </div>
             </div>
-            <div class="input-group"><label>賣方其他規費 (萬元)</label><input type="number" id="otherSellingFees" value="0"></div>
         </div>
 
         <div class="input-grid" style="border-top: 2px dashed #ccc; padding-top: 30px; margin-top: 10px;">
@@ -223,12 +230,12 @@
         const input = document.getElementById('agencyValue');
         if (mode === 'percent') {
             unitLabel.innerText = '%';
-            if (input.value > 10) input.value = 4;
+            input.value = 4;
         } else {
             unitLabel.innerText = '萬';
-            if (input.value <= 6) input.value = 15;
+            input.value = 15;
         }
-        generateTable(); // 切換時自動重新計算
+        generateTable();
     }
 
     function showSuccessToast(message) {
@@ -243,13 +250,10 @@
         const reno = parseFloat(document.getElementById('renovationCost').value) || 0;
         const buyAgencyFee = parseFloat(document.getElementById('buyAgencyFee').value) || 0;
         const buyOtherFees = parseFloat(document.getElementById('buyOtherFees').value) || 0;
-        
         const taxRateVal = document.getElementById('taxRate').value;
         const taxRate = parseFloat(taxRateVal) / 100;
-        
         const agencyMode = document.getElementById('agencyMode').value;
         const agencyValue = parseFloat(document.getElementById('agencyValue').value) || 0;
-        
         const sOther = parseFloat(document.getElementById('otherSellingFees').value) || 0;
         const base = parseFloat(document.getElementById('basePrice').value) || 0;
         const step = parseFloat(document.getElementById('stepValue').value) || 10;
@@ -271,10 +275,7 @@
 
         for(let i = 0; i >= -rows + 1; i--) {
             let price = base + (i * step);
-            
-            // 計算賣方仲介費邏輯
             let sellAgency = (agencyMode === 'percent') ? (price * (agencyValue / 100)) : agencyValue;
-            
             let actualSellExp = sellAgency + sOther;
             let deducExp = Math.max(actualSellExp, Math.min(price * 0.03, 30));
             let taxBase = price - totalAcq - deducExp;
@@ -299,7 +300,6 @@
         }
     }
 
-    // 匯出相關 Function (保持原樣)
     async function directDownloadPC() {
         generateTable();
         const mainApp = document.getElementById('main-app');
