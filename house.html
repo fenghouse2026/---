@@ -18,12 +18,17 @@
             --flat-text: #ffffff;
         }
 
+        /* 🔥 強制所有輸入框字體，防止觸發系統自動拉近放大 🔥 */
+        input, select, textarea {
+            font-size: 30px !important;
+        }
+
         body {
             font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
             background: #f4f7f6; color: var(--brand-gray);
             padding: 0; margin: 0 auto;
             width: 1050px; 
-            overflow-x: hidden;
+            overflow-x: hidden; /* 防止左右滑動 */
             overscroll-behavior: none; 
         }
 
@@ -64,7 +69,7 @@
         .brand-logo-img { height: 80px; }
         .report-main-title { color: var(--yung-green); font-size: 36px; font-weight: bold; margin: 0; letter-spacing: 2px; }
 
-        /* 設定區巨大化 */
+        /* 設定區 */
         .control-panel { background: #fdfdfd; padding: 30px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 30px; }
         .control-panel h2 { text-align: center; color: var(--brand-gray); font-size: 32px; border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-top: 0; margin-bottom: 30px; font-weight: 900; }
         
@@ -84,21 +89,19 @@
             outline: none; 
         }
 
-        /* 🔥 核心優化：賣方仲介費 左右一體化 🔥 */
+        /* 🔥 賣方仲介費一體化組件 🔥 */
         .input-combined-wrapper {
             display: flex;
             align-items: center;
-            gap: 0; /* 取消間隙 */
+            gap: 0;
         }
-        /* 左邊下拉選單 */
         .input-combined-wrapper select {
             width: 45%;
-            border-right: none; /* 移除右邊框 */
+            border-right: none;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
             background-color: #f8fafc;
         }
-        /* 右邊輸入框 */
         .input-combined-wrapper input {
             width: 55%;
             border-top-left-radius: 0;
@@ -188,7 +191,7 @@
                         <option value="percent" selected>% (百分比)</option>
                         <option value="fixed">萬 (固定金額)</option>
                     </select>
-                    <input type="number" id="agencyFeeValue" value="4" placeholder="填寫數值">
+                    <input type="number" id="agencyFeeValue" value="4">
                 </div>
             </div>
         </div>
@@ -254,10 +257,8 @@
         const buyOtherFees = parseFloat(document.getElementById('buyOtherFees').value) || 0;
         const taxRateVal = document.getElementById('taxRate').value;
         const taxRate = parseFloat(taxRateVal) / 100;
-        
         const feeUnit = document.getElementById('agencyFeeUnit').value;
         const feeValue = parseFloat(document.getElementById('agencyFeeValue').value) || 0;
-        
         const sOther = parseFloat(document.getElementById('otherSellingFees').value) || 0;
         const base = parseFloat(document.getElementById('basePrice').value) || 0;
         const step = parseFloat(document.getElementById('stepValue').value) || 10;
@@ -265,7 +266,6 @@
 
         const totalAcq = cost + reno + buyAgencyFee + buyOtherFees;
         document.getElementById('dateDisplay').innerText = new Date().toLocaleDateString();
-
         const feeDisplay = feeUnit === "percent" ? `${feeValue}%` : `${feeValue} 萬`;
 
         document.getElementById('exportSummary').innerHTML = `
@@ -335,7 +335,6 @@
                 const file = new File([blob], '成屋獲利報告.png', { type: 'image/png' });
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
                     await navigator.share({ files: [file], title: '成屋獲利報告' });
-                    showSuccessToast("✅ 分享成功！");
                 } else {
                     const url = URL.createObjectURL(blob);
                     let link = document.createElement('a');
