@@ -18,22 +18,22 @@
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* 控制按鈕區 (操作介面) */
+        /* 控制按鈕區 */
         .ui-controls { width: 100%; max-width: 800px; padding: 20px; box-sizing: border-box; }
         .btn-group { display: flex; gap: 10px; margin-bottom: 20px; }
         .btn-group button { 
             border: none; padding: 15px; border-radius: 12px; cursor: pointer; color: white;
             font-weight: 800; flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); transition: 0.3s; font-size: 15px;
         }
         .btn-calc { background: var(--tech-green); }
         .btn-share { background: var(--tech-violet); }
         .btn-pc { background: var(--tech-blue); }
 
-        /* 輸出容器：強制 A4 比例 1 : 1.414 */
+        /* 修正後的輸出容器：寬度固定，高度自適應 (避免吃掉下方資料) */
         #output-container {
             width: 800px; 
-            height: 1131px; 
+            min-height: 1131px; /* 至少維持 A4 高度 */
             background: white;
             padding: 50px;
             box-sizing: border-box;
@@ -47,38 +47,47 @@
         .brand-logo-img { height: 75px; }
         .report-title { color: #008C4A; font-size: 38px; font-weight: 900; margin: 0; }
 
-        /* 💎 優化後的「紮實」摘要區 */
+        /* 您喜歡的紮實摘要區 */
         .summary-panel {
             background: #f8fafc;
-            border-left: 10px solid #008C4A;
+            border-left: 12px solid #008C4A;
             border-top: 1px solid #e2e8f0;
             border-right: 1px solid #e2e8f0;
             border-bottom: 1px solid #e2e8f0;
             border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 40px;
+            padding: 30px;
+            margin-bottom: 35px;
         }
-        .summary-title { font-size: 26px; color: #008C4A; font-weight: 900; margin-bottom: 15px; display: block; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
-        .summary-line { font-size: 20px; color: #475569; font-weight: 800; line-height: 2; }
-        .summary-line b { color: #1e3a8a; font-size: 22px; margin: 0 4px; }
+        .summary-title { font-size: 28px; color: #008C4A; font-weight: 900; margin-bottom: 15px; display: block; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px; }
+        .summary-line { font-size: 22px; color: #334155; font-weight: 800; line-height: 2.2; }
+        .summary-line b { color: #1e3a8a; font-size: 26px; margin: 0 6px; }
 
-        .report-content { flex-grow: 1; position: relative; }
-        .watermark { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 85%; opacity: 0.12; pointer-events: none; z-index: 0; }
+        /* 報表內容區 */
+        .report-content { flex-grow: 1; position: relative; margin-bottom: 40px; }
+        .watermark { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); 
+            width: 85%; opacity: 0.12; pointer-events: none; z-index: 0; 
+        }
 
-        /* 表格大字體設計 */
-        table { width: 100%; border-collapse: collapse; position: relative; z-index: 1; }
-        th { font-size: 18px; color: #64748b; font-weight: 800; padding: 15px 10px; border-bottom: 3px solid #f1f5f9; text-align: center; }
-        td { padding: 25px 10px; text-align: center; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        /* 紮實的大字體表格 */
+        table { width: 100%; border-collapse: collapse; position: relative; z-index: 1; table-layout: fixed; }
+        th { font-size: 18px; color: #64748b; font-weight: 800; padding: 20px 5px; border-bottom: 3px solid #f1f5f9; text-align: center; }
+        td { padding: 30px 5px; text-align: center; border-bottom: 1px solid #f1f5f9; vertical-align: middle; background: transparent !important; }
         
         .col-price { font-size: 34px; color: #1e3a8a; font-weight: 900; }
         .col-net { font-size: 38px; color: #D82A29; font-weight: 900; }
         .col-common { font-size: 22px; color: #334155; font-weight: 800; }
-        .tag-small { display: block; font-size: 13px; color: #008C4A; font-weight: 900; margin-top: 5px; }
+        .tag-small { display: block; font-size: 14px; color: #008C4A; font-weight: 900; margin-top: 5px; }
 
-        .footer { border-top: 2px solid #edf2f7; padding-top: 20px; display: flex; justify-content: space-between; align-items: flex-end; color: #64748b; font-size: 16px; }
-        .footer strong { font-size: 20px; color: #334155; display: block; margin-bottom: 5px; }
+        /* 底部資訊：確保一定會顯示 */
+        .footer { 
+            border-top: 2px solid #edf2f7; padding-top: 30px;
+            display: flex; justify-content: space-between; align-items: flex-end;
+            color: #64748b; font-size: 16px;
+        }
+        .footer-left strong { font-size: 22px; color: #334155; display: block; margin-bottom: 8px; }
 
-        /* 控制面板樣式 */
+        /* 控制面板 */
         .control-panel { background: white; padding: 20px; border-radius: 16px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .input-group label { display: block; font-weight: 800; margin-bottom: 5px; color: #475569; font-size: 14px; }
         input, select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #cbd5e1; font-size: 16px; box-sizing: border-box; font-weight: bold; color: #1e3a8a; }
@@ -114,7 +123,7 @@
         <div class="input-group">
             <label>房地合一稅率</label>
             <select id="taxRate" onchange="generateTable()">
-                <option value="45">45% (2年內)</option><option value="35" selected>35% (2-5年)</option><option value="10">10% (自住滿6年)</option>
+                <option value="45">45% (持有2年內)</option><option value="35" selected>35% (持有2-5年)</option><option value="10">10% (自住滿6年)</option>
             </select>
         </div>
     </div>
@@ -176,7 +185,7 @@
 
         document.getElementById('dateDisplay').innerText = new Date().toLocaleDateString();
 
-        // 更新摘要 (大字體雙行)
+        // 更新摘要
         document.getElementById('sumLine1').innerHTML = `取得：買入 <b>${cost}</b> | 裝潢 <b>${reno}</b> | 買仲費 <b>${buyAg}</b> | 買入規費 <b>${buyFe}</b>`;
         document.getElementById('sumLine2').innerHTML = `稅務：稅率 <b>${taxText}</b> | 賣仲費 <b>${agencyVal}%</b> | 賣出規費 <b>0</b>`;
 
@@ -187,9 +196,10 @@
             let price = base - (i * step);
             let sellAgency = price * (agencyVal / 100);
             let deduc = Math.max(sellAgency, Math.min(price * 0.03, 30));
-            let rawProfit = price - (cost + reno + buyAg + buyFe) - deduc;
+            let totalCost = cost + reno + buyAg + buyFe;
+            let rawProfit = price - totalCost - deduc;
             let tax = (taxVal === "10") ? Math.max(0, rawProfit - 400) * 0.1 : Math.max(0, rawProfit) * (parseFloat(taxVal)/100);
-            let net = price - (cost + reno + buyAg + buyFe) - sellAgency - tax;
+            let net = price - totalCost - sellAgency - tax;
 
             let tr = document.createElement('tr');
             tr.innerHTML = `
@@ -203,11 +213,17 @@
         }
     }
 
+    // 💡 關鍵修正：截圖時抓取完整 scrollHeight
     async function handleMobileShare() {
         const target = document.getElementById('output-container');
-        const canvas = await html2canvas(target, { scale: 3, useCORS: true });
+        const canvas = await html2canvas(target, { 
+            scale: 3, 
+            useCORS: true,
+            height: target.scrollHeight, // 確保抓到完整高度
+            windowHeight: target.scrollHeight 
+        });
         canvas.toBlob(async (blob) => {
-            const file = new File([blob], '獲利試算A4.png', { type: 'image/png' });
+            const file = new File([blob], '獲利報告完整版.png', { type: 'image/png' });
             if (navigator.canShare && navigator.canShare({ files: [file] })) {
                 await navigator.share({ files: [file], title: '獲利試算報告' });
             }
@@ -216,10 +232,15 @@
 
     async function handlePCDownload() {
         const target = document.getElementById('output-container');
-        const canvas = await html2canvas(target, { scale: 3, useCORS: true });
+        const canvas = await html2canvas(target, { 
+            scale: 3, 
+            useCORS: true,
+            height: target.scrollHeight,
+            windowHeight: target.scrollHeight 
+        });
         const a = document.createElement('a');
         a.href = canvas.toDataURL("image/png");
-        a.download = `獲利試算A4_${new Date().getTime()}.png`;
+        a.download = `獲利報告完整版_${new Date().getTime()}.png`;
         a.click();
     }
 
