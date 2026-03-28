@@ -324,7 +324,7 @@
                     </select>
                 </div>
                 <div class="input-group">
-                    <label>上下延展筆數</label>
+                    <label>往下延展筆數</label>
                     <input type="number" id="rowCount" value="8" min="1" step="1">
                 </div>
             </div>
@@ -435,7 +435,8 @@
 
         const totalCost = costPrice + totalAcquisitionCosts;
 
-        for(let i = rowCount; i >= -rowCount; i--) {
+        // 核心修正：從 0 開始往下跑到負數
+        for(let i = 0; i >= -rowCount; i--) {
             let currentPrice = basePrice + (i * stepValue);
             
             let actualSellingExpense = (currentPrice * agencyRate) + otherSellingFees; 
