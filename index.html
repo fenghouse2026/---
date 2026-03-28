@@ -63,7 +63,7 @@
             width: 100%; padding: 12px 0; border: none; font-size: 20px; 
             background: transparent; color: var(--text-dark); font-weight: 800; outline: none;
         }
-        select { min-width: 90px; cursor: pointer; }
+        select { min-width: 60px; cursor: pointer; }
 
         /* 💡 三欄聯動佈局 */
         .price-settings {
@@ -89,7 +89,6 @@
         .brand-logo-img { height: 85px; }
         .report-title { color: var(--text-dark); font-size: 38px; font-weight: 1000; margin: 0; letter-spacing: -1.5px; }
 
-        /* 💡 摘要面板：依照要求更新文案 */
         .summary-panel {
             background: rgba(253, 185, 19, 0.03); border-radius: 20px; border: 2.5px solid var(--yung-gold);
             padding: 35px; margin-bottom: 45px;
@@ -145,8 +144,8 @@
             <label>賣出時服務費</label>
             <div class="input-row">
                 <select id="feeType" onchange="generateTable()">
-                    <option value="percent">% (百分比)</option>
-                    <option value="fixed">萬 (固定額)</option>
+                    <option value="percent">%</option>
+                    <option value="fixed">萬</option>
                 </select>
                 <input type="number" id="agencyVal" value="4" oninput="generateTable()">
             </div>
@@ -179,7 +178,6 @@
 
 <div id="output-container">
     <img src="logo浮水印.png" class="watermark" alt="浮水印" onerror="this.style.display='none'">
-    
     <div class="report-header">
         <img src="logo.png" class="brand-logo-img" alt="LOGO">
         <h1 class="report-title">成屋獲利對照報告</h1>
@@ -190,7 +188,7 @@
             取得：買入房價 <b>886</b> | 裝潢(需發票) <b>0</b> | 服務費 <b>0</b> | 規費 <b>0</b>
         </div>
         <div class="summary-line" id="sumLine2">
-            稅務：稅率 <b>20%</b> | 賣出服務費 <b>4%</b> | 賣出規費 <b>0</b>
+            稅務：房地合一稅 <b>20%</b> | 賣出服務費 <b>4%</b> | 賣出規費 <b>0</b>
         </div>
     </div>
 
@@ -242,10 +240,9 @@
 
         document.getElementById('dateDisplay').innerText = new Date().toLocaleDateString();
         
-        // 💡 同步更新摘要文案
         document.getElementById('sumLine1').innerHTML = `取得：買入房價 <b>${cost}</b> | 裝潢(需發票) <b>${reno}</b> | 服務費 <b>${buyAg}</b> | 規費 <b>${buyFe}</b>`;
         const feeDisplay = (feeType === 'percent') ? `${agencyVal}%` : `${agencyVal}萬`;
-        document.getElementById('sumLine2').innerHTML = `稅務：稅率 <b>${taxText.split(' ')[0]}</b> | 賣出服務費 <b>${feeDisplay}</b> | 賣出規費 <b>0</b>`;
+        document.getElementById('sumLine2').innerHTML = `稅務：房地合一稅 <b>${taxText.split(' ')[0]}</b> | 賣出服務費 <b>${feeDisplay}</b> | 賣出規費 <b>0</b>`;
 
         const tbody = document.getElementById('resultBody');
         tbody.innerHTML = '';
@@ -289,7 +286,7 @@
             onclone: (clonedDoc) => {
                 const el = clonedDoc.getElementById('output-container');
                 el.style.transform = 'none'; el.style.margin = '0';
-                // 💡 強制重繪：奶油琥珀水晶底圖 (image_994f7d 質感)
+                // 💡 強制注入：奶油琥珀水晶底圖
                 el.style.background = "linear-gradient(160deg, #ffffff 0%, #fdf9e8 100%)";
                 el.style.border = "1px solid rgba(253, 185, 19, 0.2)";
                 el.style.borderRadius = "0";
