@@ -9,7 +9,6 @@
         :root {
             --yung-green: #008C4A;  
             --yung-red: #D82A29;    
-            --premium-blue: #1e3a8a;
             --brand-gray: #595757;
             --border-color: #cccccc;
             --flat-green: #27ae60;
@@ -28,93 +27,76 @@
 
         .app-container { width: 960px; margin: 30px auto; background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); position: relative; }
         
-        .btn-group { 
-            display: flex; 
-            flex-direction: row; 
-            justify-content: space-between; 
-            gap: 15px; 
-            margin-bottom: 40px; 
-            background-color: #fcfcfc;
-            padding: 20px;
-            border-radius: 10px;
-            border: 1px solid #eee;
-        }
-        .btn-group button { 
-            border: none; 
-            height: 70px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            font-size: 24px; 
-            font-weight: bold; 
-            flex: 1; 
-            transition: all 0.2s ease-in-out; 
-            color: var(--flat-text); 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        /* 按鈕區 */
+        .btn-group { display: flex; justify-content: space-between; gap: 15px; margin-bottom: 30px; background: #fcfcfc; padding: 20px; border-radius: 10px; border: 1px solid #eee; }
+        .btn-group button { border: none; height: 70px; border-radius: 6px; cursor: pointer; font-size: 24px; font-weight: bold; flex: 1; color: var(--flat-text); transition: 0.2s; }
+        .btn-calc { background-color: var(--flat-green); }
+        .btn-save { background-color: var(--flat-blue); }
+        .btn-pc { background-color: var(--flat-dark); }
 
+        /* 標題區 */
         .report-branding { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--yung-red); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
         .brand-logo-img { height: 80px; }
-        .report-main-title { color: var(--yung-green); font-size: 36px; font-weight: bold; margin: 0; letter-spacing: 2px; }
+        .report-main-title { color: var(--yung-green); font-size: 36px; font-weight: bold; margin: 0; }
 
+        /* 設定面板 */
         .control-panel { background: #fdfdfd; padding: 30px; border-radius: 8px; border: 1px solid #eee; margin-bottom: 30px; }
-        .control-panel h2 { text-align: center; color: var(--brand-gray); font-size: 32px; border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-top: 0; margin-bottom: 30px; font-weight: 900; }
+        .control-panel h2 { text-align: center; font-size: 32px; border-bottom: 2px dashed #ccc; padding-bottom: 20px; margin-top: 0; margin-bottom: 30px; font-weight: 900; }
         
-        .input-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 30px; }
+        /* 網格系統 */
+        .input-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; margin-bottom: 25px; }
         .input-group { display: flex; flex-direction: column; }
-        .input-group label { font-weight: 900; margin-bottom: 12px; font-size: 24px; color: #444; }
+        .input-group label { font-weight: 900; margin-bottom: 10px; font-size: 22px; color: #444; }
         
-        /* 巨大化的仲介費切換區 */
-        .agency-row {
-            grid-column: span 2; /* 讓它橫跨兩列，空間變大 */
+        input, select { 
+            padding: 14px 18px; border: 2px solid var(--border-color); border-radius: 8px; 
+            font-size: 28px; font-weight: bold; color: #1e3a8a; outline: none; 
+        }
+
+        /* 🔥 獨立出來的仲介費專區 - 修正比例跑掉問題 🔥 */
+        .special-agency-box {
             background: #f0f7f4;
-            padding: 20px;
+            padding: 25px;
             border-radius: 12px;
             border: 2px solid var(--yung-green);
-            margin-bottom: 20px;
+            margin: 20px 0;
+        }
+        .special-agency-box label {
+            display: block; font-size: 26px; font-weight: 900; color: var(--yung-green); margin-bottom: 15px;
+        }
+        .agency-flex-container {
+            display: flex; gap: 15px; align-items: center;
+        }
+        .agency-mode-select {
+            flex: 1.2; /* 讓選單稍微寬一點點 */
+            height: 75px; background: var(--yung-green); color: white; border: none; font-size: 26px;
+        }
+        .agency-input-wrapper {
+            flex: 1; position: relative; display: flex; align-items: center;
+        }
+        .agency-input-wrapper input {
+            width: 100%; height: 75px; font-size: 36px; padding-right: 60px;
+        }
+        .unit-float {
+            position: absolute; right: 20px; font-size: 32px; font-weight: 900; color: var(--yung-green);
         }
 
-        input, select { 
-            padding: 16px 20px; 
-            border: 2px solid var(--border-color); 
-            border-radius: 8px; 
-            font-size: 30px; 
-            font-weight: bold;
-            color: #1e3a8a;
-            box-sizing: border-box; 
-            background-color: #fff; 
-            outline: none; 
-        }
-
-        /* 專門給比例/固定選單的大樣式 */
-        .large-select {
-            height: 70px;
-            background-color: var(--yung-green);
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .input-with-unit { position: relative; display: flex; align-items: center; gap: 10px; }
-        .unit-text { font-size: 36px; font-weight: 900; color: var(--yung-green); min-width: 50px; }
-
-        .report-area { position: relative; margin-top: 10px; border-top: 8px solid #fdb913; padding-top: 30px; background-color: #ffffff; }
-        table { width: 100%; border-collapse: collapse; position: relative; z-index: 2; table-layout: fixed; }
+        /* 報表區 */
+        .report-area { border-top: 8px solid #fdb913; padding-top: 20px; }
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; }
         th, td { padding: 18px 5px; text-align: center; border-bottom: 1px solid #e2e8f0; }
-        th { color: var(--brand-gray); font-size: 18px; font-weight: bold; border-bottom: 2px solid #a0aec0; border-top: 2px solid #a0aec0; background: #fff; }
-        td { font-size: 24px; font-weight: bold; color: #1e293b; white-space: nowrap; }
-        
+        th { font-size: 18px; font-weight: bold; background: #fff; border-top: 2px solid #a0aec0; border-bottom: 2px solid #a0aec0; }
+        td { font-size: 24px; font-weight: bold; color: #1e293b; }
         .highlight-row td { background-color: #fff4b3 !important; }
         .col-price { color: #2c5282; font-size: 28px; }
         .col-net { color: var(--yung-red); font-size: 28px; }
-        
-        #exportSummary { display: none; background: #f9f9f9; padding: 25px; border-radius: 6px; border-left: 6px solid var(--yung-green); margin-bottom: 25px; font-size: 24px; line-height: 1.8; }
-        .footer-info { margin-top: 50px; padding-top: 25px; border-top: 1px dashed #ccc; display: flex; justify-content: space-between; font-size: 16px; color: #777; }
-        
+
+        #exportSummary { display: none; background: #f9f9f9; padding: 20px; border-radius: 6px; border-left: 6px solid var(--yung-green); margin-bottom: 20px; font-size: 22px; line-height: 1.6; }
+        .footer-info { margin-top: 40px; padding-top: 20px; border-top: 1px dashed #ccc; display: flex; justify-content: space-between; font-size: 16px; color: #777; }
+
+        /* 導出模式樣式 */
         .exporting .control-panel, .exporting .btn-group { display: none; }
         .exporting #exportSummary { display: block; }
-        .exporting { box-shadow: none; border: none; margin: 0; }
 
         #toastMessage {
             visibility: hidden; min-width: 300px; background-color: var(--flat-green); color: #fff;
@@ -131,14 +113,12 @@
 <div class="app-container" id="main-app">
     <div class="btn-group">
         <button class="btn-calc" onclick="generateTable()">📊 重新計算</button>
-        <button class="btn-save" id="btnSave" onclick="shareOrDownload()">📤 分享 / 儲存報表</button>
-        <button class="btn-pc" id="btnPc" onclick="directDownloadPC()">💻 電腦版下載</button>
+        <button class="btn-save" onclick="shareOrDownload()">📤 分享 / 儲存報表</button>
+        <button class="btn-pc" onclick="directDownloadPC()">💻 電腦版下載</button>
     </div>
 
     <div class="report-branding">
-        <div class="brand-logo-container">
-            <img src="logo.png" alt="永義房屋" class="brand-logo-img" onerror="this.style.display='none'">
-        </div>
+        <img src="logo.png" alt="永義房屋" class="brand-logo-img" onerror="this.style.display='none'">
         <h1 class="report-main-title">成屋獲利對照報告</h1>
     </div>
 
@@ -152,7 +132,7 @@
             <div class="input-group"><label>購買時代書費等規費 (萬元)</label><input type="number" id="buyOtherFees" value="0"></div>
         </div>
         
-        <div class="input-grid" style="border-top: 2px dashed #ccc; padding-top: 30px; margin-top: 10px;">
+        <div class="input-grid" style="border-top: 2px dashed #ccc; padding-top: 25px;">
             <div class="input-group">
                 <label>房地合一稅率 (%)</label>
                 <select id="taxRate">
@@ -164,21 +144,23 @@
                 </select>
             </div>
             <div class="input-group"><label>賣方其他規費 (萬元)</label><input type="number" id="otherSellingFees" value="0"></div>
+        </div>
 
-            <div class="agency-row">
-                <label style="font-size: 28px; font-weight: 900; color: var(--yung-green); display: block; margin-bottom: 15px;">賣方仲介費計算方式</label>
-                <div class="input-with-unit">
-                    <select id="agencyMode" class="large-select" style="flex: 1;" onchange="updateAgencyUnit()">
-                        <option value="percent">按成交總價比例 (%)</option>
-                        <option value="fixed">按議定固定金額 (萬元)</option>
-                    </select>
-                    <input type="number" id="agencyValue" value="4" style="flex: 1; height: 70px; font-size: 40px;">
-                    <span id="agencyUnit" class="unit-text">%</span>
+        <div class="special-agency-box">
+            <label>二、賣方仲介費設定</label>
+            <div class="agency-flex-container">
+                <select id="agencyMode" class="agency-mode-select" onchange="updateAgencyUnit()">
+                    <option value="percent">按成交總價比例 (%)</option>
+                    <option value="fixed">按議定固定金額 (萬元)</option>
+                </select>
+                <div class="agency-input-wrapper">
+                    <input type="number" id="agencyValue" value="4">
+                    <span id="agencyUnit" class="unit-float">%</span>
                 </div>
             </div>
         </div>
 
-        <div class="input-grid" style="border-top: 2px dashed #ccc; padding-top: 30px; margin-top: 10px;">
+        <div class="input-grid" style="border-top: 2px dashed #ccc; padding-top: 25px;">
             <div class="input-group"><label>基準成交價 (萬元)</label><input type="number" id="basePrice" value="1500"></div>
             <div class="input-group">
                 <label>級距單位 (萬元)</label>
@@ -212,14 +194,8 @@
     </div>
 
     <div class="footer-info">
-        <div class="footer-left">
-            <strong>永義房屋斗六成功莊敬加盟店</strong>
-            承峰不動產仲介有限公司 | 雲林縣斗六市成功二街126號
-        </div>
-        <div style="text-align:right;">
-            製表時間：<span id="dateDisplay"></span><br>
-            <strong>免責聲明：實際稅額以國稅局核定為準。</strong>
-        </div>
+        <div><strong>永義房屋斗六成功莊敬加盟店</strong><br>承峰不動產仲介有限公司</div>
+        <div style="text-align:right;">製表時間：<span id="dateDisplay"></span><br><strong>實際稅額以國稅局核定為準。</strong></div>
     </div>
 </div>
 
@@ -230,10 +206,10 @@
         const input = document.getElementById('agencyValue');
         if (mode === 'percent') {
             unitLabel.innerText = '%';
-            input.value = 4;
+            if (input.value > 10) input.value = 4;
         } else {
             unitLabel.innerText = '萬';
-            input.value = 15;
+            if (input.value < 10) input.value = 15;
         }
         generateTable();
     }
@@ -305,21 +281,14 @@
         const mainApp = document.getElementById('main-app');
         mainApp.classList.add('exporting'); 
         await new Promise(r => setTimeout(r, 200)); 
-        try {
-            const canvas = await html2canvas(mainApp, { scale: 2, backgroundColor: "#ffffff" });
-            mainApp.classList.remove('exporting');
-            const imgData = canvas.toDataURL("image/png");
-            let link = document.createElement('a');
-            link.download = `成屋獲利報告_${new Date().getTime()}.png`;
-            link.href = imgData;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            showSuccessToast("✅ 下載成功！");
-        } catch (error) {
-            mainApp.classList.remove('exporting');
-            alert('下載失敗');
-        }
+        const canvas = await html2canvas(mainApp, { scale: 2, backgroundColor: "#ffffff" });
+        mainApp.classList.remove('exporting');
+        const imgData = canvas.toDataURL("image/png");
+        let link = document.createElement('a');
+        link.download = `成屋獲利報告.png`;
+        link.href = imgData;
+        link.click();
+        showSuccessToast("✅ 下載成功！");
     }
 
     async function shareOrDownload() {
@@ -327,29 +296,21 @@
         const mainApp = document.getElementById('main-app');
         mainApp.classList.add('exporting'); 
         await new Promise(r => setTimeout(r, 200));
-        try {
-            const canvas = await html2canvas(mainApp, { scale: 2, backgroundColor: "#ffffff" });
-            mainApp.classList.remove('exporting');
-            canvas.toBlob(async (blob) => {
-                const file = new File([blob], '成屋獲利報告.png', { type: 'image/png' });
-                if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({ files: [file], title: '成屋獲利報告' });
-                    showSuccessToast("✅ 分享成功！");
-                } else {
-                    const url = URL.createObjectURL(blob);
-                    let link = document.createElement('a');
-                    link.download = `成屋獲利報告.png`;
-                    link.href = url;
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                    showSuccessToast("✅ 下載成功！");
-                }
-            }, 'image/png');
-        } catch (error) {
-            mainApp.classList.remove('exporting');
-            alert('處理失敗');
-        }
+        const canvas = await html2canvas(mainApp, { scale: 2, backgroundColor: "#ffffff" });
+        mainApp.classList.remove('exporting');
+        canvas.toBlob(async (blob) => {
+            const file = new File([blob], '成屋獲利報告.png', { type: 'image/png' });
+            if (navigator.canShare && navigator.canShare({ files: [file] })) {
+                await navigator.share({ files: [file], title: '成屋獲利報告' });
+            } else {
+                const url = URL.createObjectURL(blob);
+                let link = document.createElement('a');
+                link.download = `成屋獲利報告.png`;
+                link.href = url;
+                link.click();
+            }
+            showSuccessToast("✅ 處理完成！");
+        }, 'image/png');
     }
 
     window.onload = generateTable;
